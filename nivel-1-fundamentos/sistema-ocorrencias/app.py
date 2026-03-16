@@ -1,0 +1,109 @@
+import storage
+
+
+def registrar_talao(ocorrencias):
+    tipo = input("Digite o tipo da ocorrência: ")
+    local = input("Digite o local da ocorrência: ")
+
+    talao = {
+        "tipo": tipo,
+        "local": local
+    }
+
+    ocorrencias.append(talao)
+    storage.salvar(ocorrencias)
+
+
+def listar_ocorrencias(ocorrencias):
+    if len(ocorrencias) == 0:
+        print("Não há ocorrências registradas!")
+        return
+
+    for i, talao in enumerate(ocorrencias, start=1):
+        print(f"Talão {i} - Tipo: {talao['tipo']} - Local: {talao['local']}")
+        print("===============")
+
+
+def pesquisar_ocorrencias(ocorrencias):
+    if len(ocorrencias) == 0:
+        print("Não há ocorrências registradas!")
+        return
+
+    termo = input("Digite o local da ocorrência que está procurando: ").lower().strip()
+
+    resultado = []
+
+    for talao in ocorrencias:
+        if termo in talao["local"].strip().lower():
+            resultado.append(talao)
+
+    if resultado != []:
+        for i, talao in enumerate(resultado, start=1):
+            print(f"Talão {i} - Tipo: {talao['tipo']} - Local: {talao['local']}")
+    else:
+        print("Não foram encontradas ocorrências!")
+
+
+def remover_ocorrencia(ocorrencias):
+    if len(ocorrencias) == 0:
+        print("Não há ocorrências registradas!")
+        return
+
+    for i, talao in enumerate(ocorrencias, start=1):
+        print(f"{i} - Tipo: {talao['tipo']} | Local: {talao['local']}")
+
+    try:
+        opcao = int(input("Digite o número da ocorrência que deseja remover: "))
+    except ValueError:
+        print("Digite apenas números!")
+        return
+
+    if opcao < 1 or opcao > len(ocorrencias):
+        print("Opção inválida!")
+        return
+
+    indice = opcao - 1
+
+    removido = ocorrencias.pop(indice)
+
+    print(f"Ocorrência removida: {removido['tipo']} - {removido['local']}")
+
+    storage.salvar(ocorrencias)
+
+
+def main():
+
+    ocorrencias = storage.carregar()
+
+    while True:
+
+        try:
+            opcao = int(input(
+                "1 Registrar | 2 Listar | 3 Pesquisar | 4 Remover | 0 Sair\nEscolha: "
+            ))
+        except ValueError:
+            print("Digite apenas números!")
+            continue
+
+        if opcao == 1:
+            registrar_talao(ocorrencias)
+
+        elif opcao == 2:
+            listar_ocorrencias(ocorrencias)
+
+        elif opcao == 3:
+            pesquisar_ocorrencias(ocorrencias)
+
+        elif opcao == 4:
+            remover_ocorrencia(ocorrencias)
+
+        elif opcao == 0:
+            print("Até logo!")
+            break
+
+        else:
+            print("Escolha uma opção válida!")
+
+
+if __name__ == "__main__":
+    main()

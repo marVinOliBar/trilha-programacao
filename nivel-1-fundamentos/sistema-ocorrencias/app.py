@@ -1,12 +1,14 @@
 import storage
 
 def registrar_talao(ocorrencias):
-    tipo = input("Digite o tipo da ocorrência: ")
-    local = input("Digite o local da ocorrência: ")
+    tipo = input("Digite o tipo da ocorrência: ").strip()
+    local = input("Digite o local da ocorrência: ").strip()
+    descricao = input("Digite a descrição da ocorrência: ").strip()
 
     talao = {
         "tipo": tipo,
-        "local": local
+        "local": local,
+        'descricao': descricao,
     }
 
     ocorrencias.append(talao)
@@ -18,7 +20,7 @@ def listar_ocorrencias(ocorrencias):
         return
 
     for i, talao in enumerate(ocorrencias, start=1):
-        print(f"Talão {i} - Tipo: {talao['tipo']} - Local: {talao['local']}")
+        print(f"Talão {i} - Tipo: {talao['tipo']} - Local: {talao['local']} - Descrição: {talao['descricao']}")
         print("===============")
 
 def pesquisar_ocorrencias(ocorrencias):
@@ -30,13 +32,13 @@ def pesquisar_ocorrencias(ocorrencias):
 
     resultado = []
 
-    for talao in ocorrencias:
+    for i, talao in enumerate(ocorrencias, start=1):
         if termo in talao["local"].strip().lower():
-            resultado.append(talao)
+            resultado.append((i, talao))
 
-    if resultado != []:
-        for i, talao in enumerate(resultado, start=1):
-            print(f"Talão {i} - Tipo: {talao['tipo']} - Local: {talao['local']}")
+    if resultado:
+        for i, talao in resultado:
+            print(f"ID {i} - Tipo: {talao['tipo']} - Local: {talao['local']} - Descrição: {talao['descricao']}")
     else:
         print("Não foram encontradas ocorrências!")
 
@@ -46,7 +48,7 @@ def remover_ocorrencia(ocorrencias):
         return
 
     for i, talao in enumerate(ocorrencias, start=1):
-        print(f"{i} - Tipo: {talao['tipo']} | Local: {talao['local']}")
+        print(f"{i} - Tipo: {talao['tipo']} - Local: {talao['local']} - Descrição: {talao['descricao']}")
 
     try:
         opcao = int(input("Digite o número da ocorrência que deseja remover: "))

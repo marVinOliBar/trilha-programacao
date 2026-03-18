@@ -1,6 +1,5 @@
 import storage
 
-
 def registrar_talao(ocorrencias):
     tipo = input("Digite o tipo da ocorrência: ")
     local = input("Digite o local da ocorrência: ")
@@ -13,7 +12,6 @@ def registrar_talao(ocorrencias):
     ocorrencias.append(talao)
     storage.salvar(ocorrencias)
 
-
 def listar_ocorrencias(ocorrencias):
     if len(ocorrencias) == 0:
         print("Não há ocorrências registradas!")
@@ -22,7 +20,6 @@ def listar_ocorrencias(ocorrencias):
     for i, talao in enumerate(ocorrencias, start=1):
         print(f"Talão {i} - Tipo: {talao['tipo']} - Local: {talao['local']}")
         print("===============")
-
 
 def pesquisar_ocorrencias(ocorrencias):
     if len(ocorrencias) == 0:
@@ -42,7 +39,6 @@ def pesquisar_ocorrencias(ocorrencias):
             print(f"Talão {i} - Tipo: {talao['tipo']} - Local: {talao['local']}")
     else:
         print("Não foram encontradas ocorrências!")
-
 
 def remover_ocorrencia(ocorrencias):
     if len(ocorrencias) == 0:
@@ -70,6 +66,43 @@ def remover_ocorrencia(ocorrencias):
 
     storage.salvar(ocorrencias)
 
+def editar_ocorrencia(ocorrencias):
+
+	if len(ocorrencias) == 0:
+		print("Não há ocorrências cadastradas!")
+		return
+
+	for i, talao in enumerate(ocorrencias, start = 1):
+		print(f"ID: {i} - Tipo: {talao['tipo']} - Local: {talao['local']} - Descrição: {talao['descricao']}")
+
+	try:
+		opcao = int(input("Digite a opcao desejada: "))
+	except ValueError:
+		print("Digite apenas números!")
+		return
+
+	if opcao < 1 or opcao > len(ocorrencias):
+		print("Digite um ID válido!")
+		return
+
+	indice = opcao - 1	
+
+	novo_tipo = input("Descreva o novo tipo de ocorrência: ").strip().lower()
+	novo_local = input("Descreva o novo local de ocorrência: ").strip().lower()
+	nova_descricao = input("Descreva a nova descricao da ocorrência: ").strip().lower()
+
+	if novo_tipo:
+		ocorrencias[indice]['tipo'] = novo_tipo
+
+	if novo_local:
+		ocorrencias[indice]['local'] = novo_local
+
+	if nova_descricao:
+		ocorrencias[indice]['descricao'] = nova_descricao
+
+	storage.salvar(ocorrencias)
+	print("Ocorrência editada com sucesso!")
+
 
 def main():
 
@@ -79,7 +112,7 @@ def main():
 
         try:
             opcao = int(input(
-                "1 Registrar | 2 Listar | 3 Pesquisar | 4 Remover | 0 Sair\nEscolha: "
+                "1 Registrar | 2 Listar | 3 Pesquisar | 4 Remover | 5 Editar 0 Sair\nEscolha: "
             ))
         except ValueError:
             print("Digite apenas números!")
@@ -96,6 +129,9 @@ def main():
 
         elif opcao == 4:
             remover_ocorrencia(ocorrencias)
+
+        elif opcao == 5:
+             editar_ocorrencia(ocorrencias)
 
         elif opcao == 0:
             print("Até logo!")

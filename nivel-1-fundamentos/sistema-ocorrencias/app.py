@@ -87,20 +87,21 @@ def editar_ocorrencia(ocorrencias):
 		print("Digite um ID válido!")
 		return
 
-	indice = opcao - 1	
+	indice = opcao - 1
+	ocorrencia = ocorrencias[indice]
 
 	novo_tipo = input(f"Descreva o novo tipo para [{ocorrencia['tipo']}]: ").strip().lower()
 	novo_local = input(f"Descreva o novo local para [{ocorrencia['local']}]: ").strip().lower()
 	nova_descricao = input(f"Descreva a nova descricao para [{ocorrencia['descricao']}]: ").strip().lower()
 
 	if novo_tipo:
-		ocorrencias[indice]['tipo'] = novo_tipo
+		ocorrencia['tipo'] = novo_tipo
 
 	if novo_local:
-		ocorrencias[indice]['local'] = novo_local
+		ocorrencia['local'] = novo_local
 
 	if nova_descricao:
-		ocorrencias[indice]['descricao'] = nova_descricao
+		ocorrencia['descricao'] = nova_descricao
 
 	storage.salvar(ocorrencias)
 	print("Ocorrência editada com sucesso!")

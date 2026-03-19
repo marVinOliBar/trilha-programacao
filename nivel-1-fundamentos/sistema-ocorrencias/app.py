@@ -1,17 +1,17 @@
 import storage
 
-def registrar_talao(ocorrencias):
-    tipo = input("Digite o tipo da ocorrência: ").strip()
-    local = input("Digite o local da ocorrência: ").strip()
-    descricao = input("Digite a descrição da ocorrência: ").strip()
+def registrar_ocorrencia(ocorrencias):
+    tipo = input("Digite o tipo da ocorrência: ").strip().lower()
+    local = input("Digite o local da ocorrência: ").strip().lower()
+    descricao = input("Digite a descrição da ocorrência: ").strip().lower()
 
-    talao = {
+    ocorrencia = {
         "tipo": tipo,
         "local": local,
         'descricao': descricao,
     }
 
-    ocorrencias.append(talao)
+    ocorrencias.append(ocorrencia)
     storage.salvar(ocorrencias)
 
 def listar_ocorrencias(ocorrencias):
@@ -19,8 +19,8 @@ def listar_ocorrencias(ocorrencias):
         print("Não há ocorrências registradas!")
         return
 
-    for i, talao in enumerate(ocorrencias, start=1):
-        print(f"Talão {i} - Tipo: {talao['tipo']} - Local: {talao['local']} - Descrição: {talao['descricao']}")
+    for i, ocorrencia in enumerate(ocorrencias, start=1):
+        print(f"Talão {i} - Tipo: {ocorrencia['tipo']} - Local: {ocorrencia['local']} - Descrição: {ocorrencia['descricao']}")
         print("===============")
 
 def pesquisar_ocorrencias(ocorrencias):
@@ -32,13 +32,13 @@ def pesquisar_ocorrencias(ocorrencias):
 
     resultado = []
 
-    for i, talao in enumerate(ocorrencias, start=1):
-        if termo in talao["local"].strip().lower():
-            resultado.append((i, talao))
+    for i, ocorrencia in enumerate(ocorrencias, start=1):
+        if termo in ocorrencia["local"].strip().lower():
+            resultado.append((i, ocorrencia))
 
     if resultado:
-        for i, talao in resultado:
-            print(f"ID {i} - Tipo: {talao['tipo']} - Local: {talao['local']} - Descrição: {talao['descricao']}")
+        for i, ocorrencia in resultado:
+            print(f"ID {i} - Tipo: {ocorrencia['tipo']} - Local: {ocorrencia['local']} - Descrição: {ocorrencia['descricao']}")
     else:
         print("Não foram encontradas ocorrências!")
 
@@ -47,8 +47,8 @@ def remover_ocorrencia(ocorrencias):
         print("Não há ocorrências registradas!")
         return
 
-    for i, talao in enumerate(ocorrencias, start=1):
-        print(f"{i} - Tipo: {talao['tipo']} - Local: {talao['local']} - Descrição: {talao['descricao']}")
+    for i, ocorrencia in enumerate(ocorrencias, start=1):
+        print(f"{i} - Tipo: {ocorrencia['tipo']} - Local: {ocorrencia['local']} - Descrição: {ocorrencia['descricao']}")
 
     try:
         opcao = int(input("Digite o número da ocorrência que deseja remover: "))
@@ -74,8 +74,8 @@ def editar_ocorrencia(ocorrencias):
 		print("Não há ocorrências cadastradas!")
 		return
 
-	for i, talao in enumerate(ocorrencias, start = 1):
-		print(f"ID: {i} - Tipo: {talao['tipo']} - Local: {talao['local']} - Descrição: {talao['descricao']}")
+	for i, ocorrencia in enumerate(ocorrencias, start = 1):
+		print(f"ID: {i} - Tipo: {ocorrencia['tipo']} - Local: {ocorrencia['local']} - Descrição: {ocorrencia['descricao']}")
 
 	try:
 		opcao = int(input("Digite a opcao desejada: "))
@@ -89,9 +89,9 @@ def editar_ocorrencia(ocorrencias):
 
 	indice = opcao - 1	
 
-	novo_tipo = input("Descreva o novo tipo de ocorrência: ").strip().lower()
-	novo_local = input("Descreva o novo local de ocorrência: ").strip().lower()
-	nova_descricao = input("Descreva a nova descricao da ocorrência: ").strip().lower()
+	novo_tipo = input(f"Descreva o novo tipo para [{ocorrencia['tipo']}]: ").strip().lower()
+	novo_local = input(f"Descreva o novo local para [{ocorrencia['local']}]: ").strip().lower()
+	nova_descricao = input(f"Descreva a nova descricao para [{ocorrencia['descricao']}]: ").strip().lower()
 
 	if novo_tipo:
 		ocorrencias[indice]['tipo'] = novo_tipo
@@ -121,7 +121,7 @@ def main():
             continue
 
         if opcao == 1:
-            registrar_talao(ocorrencias)
+            registrar_ocorrencia(ocorrencias)
 
         elif opcao == 2:
             listar_ocorrencias(ocorrencias)

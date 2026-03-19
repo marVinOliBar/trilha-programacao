@@ -78,7 +78,7 @@ def editar_ocorrencia(ocorrencias):
 		print(f"ID: {i} - Tipo: {ocorrencia['tipo']} - Local: {ocorrencia['local']} - Descrição: {ocorrencia['descricao']}")
 
 	try:
-		opcao = int(input("Digite a opcao desejada: "))
+		opcao = int(input("Digite a opção desejada: "))
 	except ValueError:
 		print("Digite apenas números!")
 		return
@@ -92,7 +92,7 @@ def editar_ocorrencia(ocorrencias):
 
 	novo_tipo = input(f"Descreva o novo tipo para [{ocorrencia['tipo']}]: ").strip().lower()
 	novo_local = input(f"Descreva o novo local para [{ocorrencia['local']}]: ").strip().lower()
-	nova_descricao = input(f"Descreva a nova descricao para [{ocorrencia['descricao']}]: ").strip().lower()
+	nova_descricao = input(f"Descreva a nova descrição para [{ocorrencia['descricao']}]: ").strip().lower()
 
 	if novo_tipo:
 		ocorrencia['tipo'] = novo_tipo
@@ -115,7 +115,7 @@ def main():
 
         try:
             opcao = int(input(
-                "1 Registrar | 2 Listar | 3 Pesquisar | 4 Remover | 5 Editar 0 Sair\nEscolha: "
+                "1 Registrar | 2 Listar | 3 Pesquisar | 4 Remover | 5 Editar | 0 Sair \nEscolha: "
             ))
         except ValueError:
             print("Digite apenas números!")

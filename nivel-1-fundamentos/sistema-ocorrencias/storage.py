@@ -2,7 +2,7 @@ import json
 
 def salvar(ocorrencias):
     with open("ocorrencias.json", "w") as arquivo:
-        json.dump(ocorrencias, arquivo)
+        json.dump(ocorrencias, arquivo, ident=4, ensure_ascii=False)
 
 def carregar():
     try:

@@ -8,7 +8,7 @@ def adicionar_ocorrencia(ocorrencias, tipo, local, descricao):
     ocorrencias.append(ocorrencia)
     return ocorrencia
 
-def buscar_ocorrencias(ocorrencias, termo):
+def buscar_ocorrencia(ocorrencias, termo):
 
     resultado = []
 

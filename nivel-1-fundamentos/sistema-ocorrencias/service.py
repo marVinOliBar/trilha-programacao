@@ -50,6 +50,13 @@ def pesquisar_ocorrencia_service(ocorrencias, termo):
 
 	return (True, resultado)
 
+def listar_ocorrencias_service(ocorrencias):
+	if not ocorrencias:
+		return (False, "Não há ocorrências registradas.")
+	else:
+		return (True, ocorrencias)
+
+
 
 
         

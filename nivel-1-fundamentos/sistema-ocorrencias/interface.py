@@ -1,16 +1,10 @@
-import storage
 from service import (
     registrar_ocorrencia_service,
     editar_ocorrencia_service,
     remover_ocorrencia_service,
     pesquisar_ocorrencia_service,
+    listar_ocorrencias_service,
 )
-
-def verificar_lista_vazia(ocorrencias):
-    if len(ocorrencias) == 0:
-        print("Não há ocorrências registradas!")
-        return True
-    return False
 
 def registrar_ocorrencia(ocorrencias):
     tipo = input("Digite o tipo da ocorrência: ").strip().lower()
@@ -36,9 +30,7 @@ def listar_ocorrencias(ocorrencias):
         print(dados)
 
 def pesquisar_ocorrencias(ocorrencias):
-    if verificar_lista_vazia(ocorrencias):
-        return
-
+    
     termo = input("Digite o termo que deseja buscar: ").lower().strip()
 
     sucesso, resultado = pesquisar_ocorrencia_service(ocorrencias, termo)
@@ -50,9 +42,7 @@ def pesquisar_ocorrencias(ocorrencias):
         print(resultado)
 
 def remover_ocorrencia(ocorrencias):
-    if verificar_lista_vazia(ocorrencias):
-        return
-
+   
     for i, ocorrencia in enumerate(ocorrencias, start=1):
         print(f"{i} - Tipo: {ocorrencia['tipo']} - Local: {ocorrencia['local']} - Descrição: {ocorrencia['descricao']}")
 
@@ -77,9 +67,6 @@ def remover_ocorrencia(ocorrencias):
         print(f"Ocorrência removida: {removido['tipo']} - {removido['local']}")
 
 def editar_ocorrencia(ocorrencias):
-
-    if verificar_lista_vazia(ocorrencias):
-        return
 
     for i, ocorrencia in enumerate(ocorrencias, start = 1):
         print(f"ID: {i} - Tipo: {ocorrencia['tipo']} - Local: {ocorrencia['local']} - Descrição: {ocorrencia['descricao']}")

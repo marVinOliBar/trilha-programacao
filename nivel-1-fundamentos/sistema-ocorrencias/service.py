@@ -5,17 +5,24 @@ from logica import (
 )
 
 def registrar_ocorrencia_service(ocorrencias, tipo, local, descricao):
-    ocorrencia = adicionar_ocorrencia(ocorrencias, tipo, local, descricao)
-    storage.salvar(ocorrencias)
-    return ocorrencia
+    if not tipo: # if tipo == "":
+        print("Erro! O campo tipo deve ser preenchido.")
+    if not local:
+        print("Erro! O campo local deve ser preenchido.")
+    if not descricao:
+        print("Erro! O campo descrição deve ser preenchido.")
+    else:
+        ocorrencia = adicionar_ocorrencia(ocorrencias, tipo, local, descricao)
+        storage.salvar(ocorrencias)
+        return ocorrencia
 
 def editar_ocorrencia_service(ocorrencias, indice, novo_tipo, novo_local, nova_descricao):
     if not novo_tipo:
-        print()
+        print("Erro! O campo tipo deve ser preenchido.")
     elif not novo_local:
-        print()
+        print("Erro! O campo local deve ser preenchido.")
     elif nova_descricao:
-        print()
+        print("Erro! O campo descrição deve ser preenchido.")
     else:
         ocorrencia = atualizar_ocorrencia(ocorrencias, indice, novo_tipo, novo_local, nova_descricao)
         storage.salvar(ocorrencias)

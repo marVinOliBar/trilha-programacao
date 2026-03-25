@@ -39,7 +39,7 @@ def remover_ocorrencia_service(ocorrencias, indice):
 		storage.salvar(ocorrencias)
 		return (True, removido)
 
-def buscar_ocorrencia_service(ocorrencias, termo):
+def pesquisar_ocorrencia_service(ocorrencias, termo):
 	if not termo:
 		return (False, "Digitar um termo para a pesquisa.")
 	

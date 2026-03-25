@@ -2,9 +2,11 @@ import storage
 from logica import (
     buscar_ocorrencias,
     excluir_ocorrencia,
-    atualizar_ocorrencia,
 )
-from service import registrar_ocorrencia_service
+from service import (
+    registrar_ocorrencia_service,
+    editar_ocorrencia_service,
+)
 
 def verificar_lista_vazia(ocorrencias):
     if len(ocorrencias) == 0:
@@ -93,8 +95,6 @@ def editar_ocorrencia(ocorrencias):
     novo_local = input(f"Descreva o novo local para [{ocorrencia['local']}]: ").strip().lower()
     nova_descricao = input(f"Descreva a nova descrição para [{ocorrencia['descricao']}]: ").strip().lower()
 
-    ocorrencia_atualizada = atualizar_ocorrencia(ocorrencias, indice, novo_tipo, novo_local, nova_descricao)
-    
-    storage.salvar(ocorrencias)
-
+    ocorrencia_atualizada = editar_ocorrencia_service(ocorrencias, indice, novo_tipo, novo_local, nova_descricao)
+  
     print(f"Ocorrência editada: {ocorrencia_atualizada['tipo']} - {ocorrencia_atualizada['local']} - {ocorrencia_atualizada['descricao']}")

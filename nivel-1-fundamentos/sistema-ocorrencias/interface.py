@@ -26,12 +26,14 @@ def registrar_ocorrencia(ocorrencias):
         print(dado)
 
 def listar_ocorrencias(ocorrencias):
-    if verificar_lista_vazia(ocorrencias):
-        return
+    sucesso, dados = listar_ocorrencias_service(ocorrencias)
 
-    for i, ocorrencia in enumerate(ocorrencias, start=1):
-        print(f"Talão {i} - Tipo: {ocorrencia['tipo']} - Local: {ocorrencia['local']} - Descrição: {ocorrencia['descricao']}")
-        print("===============")
+    if sucesso:
+        for i, dado in enumerate(dados, start=1):
+            print(f"Talão {i} - Tipo: {dado['tipo']} - Local: {dado['local']} - Descrição: {dado['descricao']}")
+            print("===============")
+    else:
+        print(dados)
 
 def pesquisar_ocorrencias(ocorrencias):
     if verificar_lista_vazia(ocorrencias):

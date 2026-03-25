@@ -3,6 +3,7 @@ from logica import (
     adicionar_ocorrencia,
     atualizar_ocorrencia,
     excluir_ocorrencia,
+	buscar_ocorrencia,
 )
 
 def registrar_ocorrencia_service(ocorrencias, tipo, local, descricao):
@@ -37,6 +38,17 @@ def remover_ocorrencia_service(ocorrencias, indice):
 		removido = excluir_ocorrencia(ocorrencias, indice)
 		storage.salvar(ocorrencias)
 		return (True, removido)
+
+def buscar_ocorrencia_service(ocorrencias, termo):
+	if not termo:
+		return (False, "Digitar um termo para a pesquisa.")
+	
+	resultado = buscar_ocorrencia(ocorrencias, termo)
+	
+	if not resultado:
+		return (False, "Não foram encontradas ocorrências com esse termo.")
+
+	return (True, resultado)
 
 
 

@@ -2,6 +2,7 @@ import storage
 from logica import (
     adicionar_ocorrencia,
     atualizar_ocorrencia,
+    excluir_ocorrencia,
 )
 
 def registrar_ocorrencia_service(ocorrencias, tipo, local, descricao):
@@ -27,6 +28,16 @@ def editar_ocorrencia_service(ocorrencias, indice, novo_tipo, novo_local, nova_d
         ocorrencia = atualizar_ocorrencia(ocorrencias, indice, novo_tipo, novo_local, nova_descricao)
         storage.salvar(ocorrencias)
         return (True, ocorrencia)
+
+def remover_ocorrencia_service(ocorrencias, indice):
+
+	if indice < 0 or indice >= len(ocorrencias):
+		return (False, "Escolher uma ocorrências válida")
+	else:
+		removido = excluir_ocorrencia(ocorrencias, indice)
+		storage.salvar(ocorrencias)
+		return (True, removido)
+
 
 
         

@@ -42,7 +42,13 @@ def pesquisar_ocorrencias(ocorrencias):
         print(resultado)
 
 def remover_ocorrencia(ocorrencias):
-   
+
+    tem, lista = listar_ocorrencias_service(ocorrencias)
+    
+    if not tem:
+        print(lista)
+        return
+    
     for i, ocorrencia in enumerate(ocorrencias, start=1):
         print(f"{i} - Tipo: {ocorrencia['tipo']} - Local: {ocorrencia['local']} - Descrição: {ocorrencia['descricao']}")
 
@@ -68,6 +74,12 @@ def remover_ocorrencia(ocorrencias):
 
 def editar_ocorrencia(ocorrencias):
 
+    tem, lista = listar_ocorrencias_service(ocorrencias)
+    
+    if not tem:
+        print(lista)
+        return
+        
     for i, ocorrencia in enumerate(ocorrencias, start = 1):
         print(f"ID: {i} - Tipo: {ocorrencia['tipo']} - Local: {ocorrencia['local']} - Descrição: {ocorrencia['descricao']}")
 

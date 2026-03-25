@@ -3,7 +3,7 @@ from logica import (
     adicionar_ocorrencia,
     atualizar_ocorrencia,
     excluir_ocorrencia,
-	buscar_ocorrencias,
+	buscar_ocorrencia,
 )
 
 def registrar_ocorrencia_service(ocorrencias, tipo, local, descricao):

@@ -14,7 +14,7 @@ def registrar_ocorrencia_service(ocorrencias, tipo, local, descricao):
     else:
         ocorrencia = adicionar_ocorrencia(ocorrencias, tipo, local, descricao)
         storage.salvar(ocorrencias)
-        return ocorrencia
+        return (True, ocorrencia)
 
 def editar_ocorrencia_service(ocorrencias, indice, novo_tipo, novo_local, nova_descricao):
     if not novo_tipo:
@@ -27,4 +27,6 @@ def editar_ocorrencia_service(ocorrencias, indice, novo_tipo, novo_local, nova_d
         ocorrencia = atualizar_ocorrencia(ocorrencias, indice, novo_tipo, novo_local, nova_descricao)
         storage.salvar(ocorrencias)
         return (True, ocorrencia)
+
+
         

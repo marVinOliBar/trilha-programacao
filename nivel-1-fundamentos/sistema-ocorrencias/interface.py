@@ -1,11 +1,11 @@
 import storage
 from logica import (
     buscar_ocorrencias,
-    excluir_ocorrencia,
 )
 from service import (
     registrar_ocorrencia_service,
     editar_ocorrencia_service,
+    remover_ocorrencia_service,
 )
 
 def verificar_lista_vazia(ocorrencias):
@@ -68,11 +68,13 @@ def remover_ocorrencia(ocorrencias):
 
     indice = opcao - 1
 
-    removido = excluir_ocorrencia(ocorrencias, indice)
+    sucesso, dado = remover_ocorrencia_service(ocorrencias, indice)
 
-    storage.salvar(ocorrencias)
-    
-    print(f"Ocorrência removida: {removido['tipo']} - {removido['local']}")
+    if not sucesso:
+        print(dado)
+    else:
+        removido = dado
+        print(f"Ocorrência removida: {removido['tipo']} - {removido['local']}")
 
 def editar_ocorrencia(ocorrencias):
 

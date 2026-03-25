@@ -1,11 +1,9 @@
 import storage
-from logica import (
-    buscar_ocorrencias,
-)
 from service import (
     registrar_ocorrencia_service,
     editar_ocorrencia_service,
     remover_ocorrencia_service,
+    pesquisar_ocorrencia_service,
 )
 
 def verificar_lista_vazia(ocorrencias):
@@ -41,13 +39,13 @@ def pesquisar_ocorrencias(ocorrencias):
 
     termo = input("Digite o termo que deseja buscar: ").lower().strip()
 
-    resultado = buscar_ocorrencias(ocorrencias, termo)
+    sucesso, resultado = pesquisar_ocorrencia_service(ocorrencias, termo)
 
-    if resultado:
+    if sucesso:
         for i, ocorrencia in resultado:
             print(f"ID {i} - Tipo: {ocorrencia['tipo']} - Local: {ocorrencia['local']} - Descrição: {ocorrencia['descricao']}")
     else:
-        print("Não foram encontradas ocorrências!")
+        print(resultado)
 
 def remover_ocorrencia(ocorrencias):
     if verificar_lista_vazia(ocorrencias):

@@ -19,9 +19,13 @@ def registrar_ocorrencia(ocorrencias):
     local = input("Digite o local da ocorrência: ").strip().lower()
     descricao = input("Digite a descrição da ocorrência: ").strip().lower()
 
-    ocorrencia = registrar_ocorrencia_service(ocorrencias, tipo, local, descricao)
-        
-    print(f"Ocorrência registrada: {ocorrencia['tipo']} - {ocorrencia['local']} - {ocorrencia['descricao']}")
+    sucesso, dado = registrar_ocorrencia_service(ocorrencias, tipo, local, descricao)
+
+    if sucesso:
+        ocorrencia = dado
+        print(f"Ocorrência registrada: {ocorrencia['tipo']} - {ocorrencia['local']} - {ocorrencia['descricao']}")
+    else:
+        print(dado)
 
 def listar_ocorrencias(ocorrencias):
     if verificar_lista_vazia(ocorrencias):
@@ -95,6 +99,10 @@ def editar_ocorrencia(ocorrencias):
     novo_local = input(f"Descreva o novo local para [{ocorrencia['local']}]: ").strip().lower()
     nova_descricao = input(f"Descreva a nova descrição para [{ocorrencia['descricao']}]: ").strip().lower()
 
-    ocorrencia_atualizada = editar_ocorrencia_service(ocorrencias, indice, novo_tipo, novo_local, nova_descricao)
-  
-    print(f"Ocorrência editada: {ocorrencia_atualizada['tipo']} - {ocorrencia_atualizada['local']} - {ocorrencia_atualizada['descricao']}")
+    sucesso, dado = editar_ocorrencia_service(ocorrencias, indice, novo_tipo, novo_local, nova_descricao)
+    
+    if sucesso:
+        ocorrencia_atualizada = dado
+        print(f"Ocorrência editada: {ocorrencia_atualizada['tipo']} - {ocorrencia_atualizada['local']} - {ocorrencia_atualizada['descricao']}")
+    else:
+        print(dado)

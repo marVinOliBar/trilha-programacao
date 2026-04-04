@@ -1,0 +1,14 @@
+[
+    {
+        "prefixo": "AB-13108",
+        "quilometragem": "0002",
+        "estacao": "BOA VISTA",
+        "situacao": "ATIVA"
+    },
+    {
+        "prefixo": "ab-13101",
+        "quilometragem": "0001",
+        "estacao": "alto alegre",
+        "situacao": "baixada"
+    }
+]

@@ -1,0 +1,20 @@
+[
+    {
+        "tipo": "salvamento",
+        "local": "navarrete",
+        "descricao": "exterminio abelha",
+        "prefixo": "AB-13121"
+    },
+    {
+        "tipo": "incendio",
+        "local": "centro",
+        "descricao": "na panela",
+        "prefixo": "AB-13121"
+    },
+    {
+        "tipo": "incendio",
+        "local": "centro",
+        "descricao": "veiculo",
+        "prefixo": "AB-13121"
+    }
+]

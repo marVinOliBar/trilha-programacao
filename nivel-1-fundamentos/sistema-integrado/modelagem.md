@@ -20,6 +20,17 @@ REGRA:
 .le o tipo
 .le o local
 .le a descricao
+
+"Importar filtrar_viaturas_elegiveis da lógica (junto com o que já tem de import do service).
+Função recebe ocorrencias e fire_trucks.
+Chama o filtro. Guarda em variável com nome honesto (não result).
+Se vazio: print de mensagem, return.
+Exibe as viaturas elegíveis (formato sem número sequencial).
+Pede input do prefixo. Lembra de .strip() e .upper() (pra normalizar com a regra do service).
+Pede input de tipo, local, descrição (com .strip().lower() como na v1).
+Chama o service, captura sucesso, dado.
+Se sucesso, exibe a ocorrência formatada. Se não, exibe a mensagem de erro."
+
 .chama o service e os coloca em duas variaveis distintas sucesso e dados
 .verifica se a variavel sucesso é verdadeira
 ..se sim exibe para o usuario a nova ocorrencia registrada
@@ -37,3 +48,21 @@ REGRA:
 ...se não, segue o loop
 .retorna a nova lista com viaturas elegíveis para a interface
 EXCEÇÕES: não há
+
+FUNÇÃO: salvar
+FAZ: salva dados no documento informado.
+ENTRADA: nome_arquivo, dados
+SAÍDA: nenhuma #None. São a mesma coisa
+REGRA:
+.gravar dados recebidos no arquivo informado
+EXCEÇÕES: nenhuma
+
+FUNÇÃO: carregar
+FAZ: retorna dados do documento informado para quem chama.
+ENTRADA: nome_arquivo
+SAÍDA: dados
+REGRA:
+.tentar abrir o arquivo e ler.
+..se o arquivo existir: retorna o que foi lido.
+..se o arquivo não existir: retorna lista vazia
+EXCEÇÕES: nenhuma

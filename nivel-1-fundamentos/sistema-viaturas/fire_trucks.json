@@ -10,5 +10,11 @@
         "quilometragem": "0001",
         "estacao": "alto alegre",
         "situacao": "baixada"
+    },
+    {
+        "prefixo": "ab-13121",
+        "quilometragem": "0003",
+        "estacao": "centro",
+        "situacao": "Reserva"
     }
 ]

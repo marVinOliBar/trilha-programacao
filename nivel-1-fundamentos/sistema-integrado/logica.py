@@ -3,7 +3,7 @@ def criar_ocorrencia (ocorrencias, tipo, local, descricao, unit_number):
         'tipo' : tipo,
         'local' : local,
         'descricao' : descricao,
-        'trucks' : unit_number,
+        'prefixo' : unit_number,
     }
     
     ocorrencias.append(ocorrencia)

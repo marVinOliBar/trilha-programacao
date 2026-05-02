@@ -16,5 +16,17 @@
         "local": "centro",
         "descricao": "veiculo",
         "prefixo": "AB-13121"
+    },
+    {
+        "tipo": "salvamento",
+        "local": "oeste",
+        "descricao": "cachorro em bueiro",
+        "prefixo": "AB-13108"
+    },
+    {
+        "tipo": "incendio",
+        "local": "urano",
+        "descricao": "poste de energia",
+        "prefixo": "AB-13108"
     }
 ]

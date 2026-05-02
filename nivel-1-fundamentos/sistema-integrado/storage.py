@@ -8,5 +8,5 @@ def carregar(nome_arquivo):
     try:
         with open(nome_arquivo, "r") as arquivo:
             return json.load(arquivo)
-    except FileNotFoundError:
+    except (FileNotFoundError, json.JSONDecodeError):
         return []

@@ -3,6 +3,8 @@ import storage
 from logica import (
     criar_ocorrencia,
     filtrar_viaturas_elegiveis,
+    listar_prefixos_viaturas,
+    ocorrencia_prefixo_selecionado,
 )
 
 def registrar_ocorrencia_service(ocorrencias, fire_trucks, tipo, local, descricao, unit_number):
@@ -25,3 +27,10 @@ def registrar_ocorrencia_service(ocorrencias, fire_trucks, tipo, local, descrica
     dado = criar_ocorrencia(ocorrencias, tipo, local, descricao, unit_number)
     storage.salvar("ocorrencias.json", ocorrencias)
     return (True, dado)
+
+def consultar_ocorrencias_viaturas_service(ocorrencias, opcao):
+    elegiveis = listar_prefixos_viaturas(ocorrencias)
+    if opcao not in elegiveis:
+        return (False, "Escolha um prefixo válido!")
+    ocorrencias_filtradas = ocorrencia_prefixo_selecionado(ocorrencias, opcao)
+    return (True, ocorrencias_filtradas)

@@ -20,3 +20,11 @@ REGRA:
 . Testar PK fazendo inserção de viatura sem prefixo declarado.
 . Para cada tentativa, capturar o erro e mostrar mensagem.
 EXCEÇÕES: algum dos constraints não pegar o erro.
+
+TABELA: atendimento
+FAZ: a junção da tabela viatura (atributo prefixo) com a tabela ocorrência (atributo id).
+ATRIBUTOS (nome + tipo + constraints):
+. prefixo + TEXT + NOT NULL
+. id + INTEGER + NOT NULL
+RELAÇÕES (com quem se liga e como): atributo prefixo se liga a tabela viatura e id se liga a tabela ocorrencia.
+RESTRIÇÃO: impedir que prefixo e id sejam diferentes dos existentes nas tabelas viatura e ocorrencia.

@@ -116,3 +116,12 @@ REGRA:
 . se sucesso for verdadeiro, exibir dados para o usuario
 . se sucesso for falso, exibir mensagem de erro para o usuario
 EXCEÇÕES: não há.
+
+FUNÇÃO: registrar_ocorrencia_storage
+FAZ: salva a ocorrencia recem registrada no banco de dados
+ENTRADA: dicionário contendo sdo, data, tipo, local e descrição da ocorrencia
+SAÍDA: tupla contendo sdo, data, tipo, local e descrição da ocorrencia
+REGRA:
+.função recebe o dicionário com os valores das ocorrencias e devolve uma tupla com os valores da ocorrencia
+para ser salva no banco de dados
+EXCEÇÕES: nenhuma

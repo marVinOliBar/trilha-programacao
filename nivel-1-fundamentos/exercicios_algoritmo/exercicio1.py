@@ -11,8 +11,6 @@ def texto_obrigatorio_valido(valor):
     
     return True
 
-
-
 def validar_ocorrencia(ocorrencia):
     
     if not isinstance(ocorrencia, dict):

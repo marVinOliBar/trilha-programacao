@@ -28,3 +28,73 @@ ATRIBUTOS (nome + tipo + constraints):
 . id + INTEGER + NOT NULL
 RELAÇÕES (com quem se liga e como): atributo prefixo se liga a tabela viatura e id se liga a tabela ocorrencia.
 RESTRIÇÃO: impedir que prefixo e id sejam diferentes dos existentes nas tabelas viatura e ocorrencia.
+
+FUNÇÃO: remover_viatura_storage
+FAZ: remove uma viatura registrada na tabela viatura
+ENTRADA: recebe o prefixo da viatura (str)
+SAÍDA: retorna o a quantidade de linhas afetadas
+REGRA:
+. a função abre a conexão.
+. cria o cursor.
+. estabele PRAGMA para as chaves estrangeiras.
+. executa a exclusão da viatura conforme argumento recebido.
+. guarda o contagem de linhas afetadas em uma variável
+. envia as alterações
+. encerra a conexao
+. retorna a variavel com valor da contagem de linhas
+EXCEÇÕES: apagar chave que é estrangeira em outra tabela. IntegrityError.
+
+FUNÇÃO: remover_viatura_service
+FAZ: recebe prefixo como argumento da interface, chama a função remover_viatura_storage e devolve resultado, em contrato padrão, para a interface.
+ENTRADA: argumento prefixo (str)
+SAÍDA: resultado em contrato padrão (True, resultado) ou (False, mensagem de erro)
+REGRA:
+. a função recebe prefixo como argumento
+. valida se argumento foi digitado:
+.. se errado, retorna (False, "mensagem de erro")
+. tentar: chamar função remover_viatura_storage passando prefixo como argumento e atribui o resultado na variável resultado
+.. se erro, retorna (False, "mensagem de erro")
+. verifica se resultado é 0:
+.. se sim, retorna (False, "mensagem de erro")
+.. se não, retorna (True, resultado)
+EXCEÇÕES: receber erro na tentativa de resultado da chamada de storage.
+
+FUNÇÃO: editar_viatura_storage
+FAZ: recebe os argumentos prefixo, quilometragem, estacao, situacao e devolve se houve ou não alteração.
+ENTRADA: argumentos prefixo, quilometragem, estacao, situacao
+SAÍDA: variavel com resultado de rowncount 1 ou 0
+REGRA:
+. função recebe os argumentos
+. abre conexao
+. monta cursor
+. executa PRAGMA para chave estrangeira
+. executa comando para editar as chaves permitidas
+. variavel resultado recebe a contegem de linhas alteradas
+. envia a alterações para o banco
+. encerra a conexão
+. retorna com o a variavel
+EXCEÇÕES: valor inaceitável no CHECK da chave situacao. IntegrityError.
+
+FUNÇÃO: editar_viatura_service
+FAZ: recebe argumentos da interface, chama a função do storage e retorna contrato padrão para a interface.
+ENTRADA: argumentos prefixo, quilometragem, estacao e situacao.
+SAÍDA: sucesso (True, resultado) e falha (False, "mensagem de erro")
+REGRA:
+. receber os argumentos da interface
+. verificar se o prefixo não foi preenchido
+.. retornar (False, "mensagem de erro")
+. verificar se quilometragem não foi preenchido
+.. retornar (False, "mensagem de erro")
+. verificar se estacao não foi preenchido
+.. retornar (False, "mensagem de erro")
+. verificar se situacao não foi preenchido
+.. retornar (False, "mensagem de erro")
+. declarar válidas as situações (operando, manutencao e baixda)
+. verificar se situação não está entre as situações validas
+.. se sim, retornar (False, "mensagem de erro")
+.tentar: declarar variável resultado e atribuir o resultado da função storage com os argumentos prefixo, quilometragem, estacao e situacao
+.. se erro IntegrityError, retorna (False, "mensagem de erro")
+. verificar se resultado é igual a 0:
+.. se sim, retornar (False, "mensagem de erro")
+.. se não, retornar (True, resultado)
+EXCEÇÕES: prefixo não foi preenchido. IntegrityErro: CHECK da situacao bloqueou entrada errada.

@@ -1,4 +1,8 @@
-from service import(registrar_viatura_service)
+from service import(registrar_viatura_service,
+                    buscar_viatura_service,
+                    remover_viatura_service,
+                    editar_viatura_service,
+                    listar_viatura_service)
 
 def registrar_viatura():
     
@@ -21,3 +25,50 @@ def registrar_viatura():
     else:
         print(dado)
         return
+    
+def buscar_viatura():
+    termo = input("Digite o termo de busca (prefixo): ")
+    
+    sucesso, dado = buscar_viatura_service(termo)
+    
+    if sucesso:
+        for linha in dado:
+            prefixo, quilometragem, estacao, situacao = linha
+            print(f"Prefixo: {prefixo} | Quilometragem: {quilometragem} | Estação: {estacao} | Situação: {situacao}")
+    else:
+        print(dado)
+        
+def remover_viatura():
+    prefixo = input("Digite o prefixo da viatura que deseja remover: ").lower().strip()
+    sucesso, dado = remover_viatura_service(prefixo)
+    if not sucesso:
+        print(dado)
+    else:
+        print(f"Você removeu a viatura {prefixo} com sucesso.")
+        
+def editar_viatura():
+    prefixo = input("Digite o prefixo da viatura que deseja editar: ").lower().strip()
+    try:
+        quilometragem = int(input("Digite a nova quilometragem da viatura: "))
+    except ValueError:
+        print("Digite um valor válido!")
+        return
+    estacao = input("Digite a nova estação da viatura: ").lower().strip()
+    situacao = input("Digite a situacao da viatura: operando | manutencao | baixada: ").lower().strip()
+    
+    sucesso, dado = editar_viatura_service(prefixo, quilometragem, estacao, situacao)
+    
+    if not sucesso:
+        print(dado)
+    else:
+        print(f"A viatura {prefixo} foi editada com sucesso!")
+        
+def listar_viatura():
+    sucesso, dado = listar_viatura_service()
+    
+    if sucesso:
+        for linha in dado:
+            prefixo, quilometragem, estacao, situacao = linha
+            print(f"Prefixo: {prefixo} | Quilometragem: {quilometragem} | Estação: {estacao} | Situação: {situacao}")
+    else:
+        print(dado)

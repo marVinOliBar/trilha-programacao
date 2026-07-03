@@ -7,7 +7,7 @@ cursor.execute("DROP TABLE IF EXISTS ocorrencia")
 
 cursor.execute("""
     CREATE TABLE ocorrencia (
-        id INTEGER PRIMARY KEY NOT NULL, 
+        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
         sdo INTEGER NOT NULL,
         data TEXT NOT NULL,
         tipo TEXT NOT NULL,
@@ -16,11 +16,6 @@ cursor.execute("""
         UNIQUE (sdo, data)
     )
 """)
-
-cursor.execute(
-    "INSERT INTO ocorrencia (id, sdo, data, tipo, local, descricao) VALUES (?, ?, ?, ?, ?, ?)",
-    (1, 1, "2026-06-02", "teste", "teste", "teste")
-)
 
 cursor.execute("SELECT * FROM ocorrencia")
 resultado = cursor.fetchall()

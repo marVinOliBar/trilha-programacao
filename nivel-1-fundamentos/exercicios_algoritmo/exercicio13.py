@@ -4,7 +4,7 @@ funcionarios = [
     {"nome": "Clara", "cargo": "analista", "salario": 5200, "ativo": True},
     {"nome": "Diego", "cargo": "estagiário", "salario": 1800, "ativo": True},
     {"nome": "Elis", "cargo": "gerente", "salario": 10500, "ativo": True},
-    {"nome": "Fábio", "cargo": "analista", "salario": 4800, "ativo": True},
+    {"nome": "Fábio", "cargo": "analista", "salario": 4800, "ativo": True},e
     {"nome": "Gisele", "cargo": "estagiário", "salario": 2000, "ativo": False},
 ]
 

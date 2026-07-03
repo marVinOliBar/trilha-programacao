@@ -98,3 +98,32 @@ REGRA:
 .. se sim, retornar (False, "mensagem de erro")
 .. se não, retornar (True, resultado)
 EXCEÇÕES: prefixo não foi preenchido. IntegrityErro: CHECK da situacao bloqueou entrada errada.
+
+FUNÇÃO: registrar_ocorrencia_storage
+FAZ:registra quatro dados - sdo (int), data (str), tipo (str), local (str), descricao (str) - da ocorrencia no banco de dados e retorna
+a última linha modificada no banco.
+ENTRADA: argumentos - sdo (int), data (str), tipo (str), local (str), descricao (str)
+SAÍDA: valor da ultima linha modificada
+REGRA: a função abre a conexão executa a inserção dos argumentos que recebeu na tabela e retorna com a última linha
+modificada.
+EXCEÇÕES: se usuario digitar mesmo sdo e data o banco volta sql.IntegrityError.
+
+FUNÇÃO: registrar_ocorrencia_service
+FAZ: recebe 5 campos da interface, valida, chama o storage, traduz o retorno em contrato padrão.
+ENTRADA: sdo (int), data (str), tipo (str), local (str), descricao (str)
+SAÍDA: (True, id_gerado) ou (False, "mensagem")
+REGRA:
+. valida se sdo foi preenchido (não é 0/None)
+.. se falhar, retorna (False, "mensagem")
+. valida se data foi preenchida
+.. se falhar, retorna (False, "mensagem")
+. valida se tipo foi preenchido
+.. se falhar, retorna (False, "mensagem")
+. valida se local foi preenchido
+.. se falhar, retorna (False, "mensagem")
+. valida se descricao foi preenchida
+.. se falhar, retorna (False, "mensagem")
+. tenta: chama registrar_ocorrencia_storage(sdo, data, tipo, local, descricao), atribui em resultado
+.. se sqlite3.IntegrityError: retorna (False, "já existe ocorrência com esse SDO nesta data")
+. retorna (True, resultado)
+EXCEÇÕES: sqlite3.IntegrityError (violação de UNIQUE composto sdo+data).

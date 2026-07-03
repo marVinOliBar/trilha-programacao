@@ -62,3 +62,18 @@ def listar_viatura_storage():
     resultado = cursor.fetchall()
     conexao.close()
     return resultado
+
+def registrar_ocorrencia_storage(sdo, data, tipo, local, descricao):
+    conexao = sqlite3.connect(CAMINHO_BD)
+    cursor = conexao.cursor()
+    cursor.execute("PRAGMA foreign_keys = ON")
+    cursor.execute("INSERT INTO ocorrencia (sdo, data, tipo, local, descricao) VALUES (?, ?, ?, ?, ?)",
+                   (sdo, data, tipo, local, descricao)
+                   
+    )
+    resultado = cursor.lastrowid
+    conexao.commit()
+    conexao.close()
+    return resultado
+
+registrar_ocorrencia_storage(2, "2026-06-29", "incêndio", "rua x", "teste")

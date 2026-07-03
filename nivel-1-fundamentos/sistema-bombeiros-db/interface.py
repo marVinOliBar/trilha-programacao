@@ -2,7 +2,8 @@ from service import(registrar_viatura_service,
                     buscar_viatura_service,
                     remover_viatura_service,
                     editar_viatura_service,
-                    listar_viatura_service)
+                    listar_viatura_service,
+                    registrar_ocorrencia_service,)
 
 def registrar_viatura():
     
@@ -72,3 +73,22 @@ def listar_viatura():
             print(f"Prefixo: {prefixo} | Quilometragem: {quilometragem} | Estação: {estacao} | Situação: {situacao}")
     else:
         print(dado)
+        
+def registrar_ocorrencia():
+    try:
+        sdo = int(input("Entre com o número do SDO: "))
+    except ValueError:
+        print("É necessário entrar com um número inteiro")
+        return
+        
+    data = input("Digite a data da ocorrência: ").strip()
+    tipo = input("Digite o tipo da ocorrência: ").lower().strip()
+    local = input("Digite o local da ocorrência: ").lower().strip()
+    descricao = input("Digite a descrição da ocorrência: ").lower().strip()
+    
+    sucesso, dado = registrar_ocorrencia_service(sdo, data, tipo, local, descricao)
+    
+    if not sucesso:
+        print(dado)
+    else:
+        print(f"A ocorrência de SDO nº {sdo} da data {data} foi gerada com sucesso.")

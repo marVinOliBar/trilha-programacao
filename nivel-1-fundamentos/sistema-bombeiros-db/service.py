@@ -3,7 +3,8 @@ from storage import(registrar_viatura_storage,
                     buscar_viatura_storage,
                     remover_viatura_storage,
                     editar_viatura_storage,
-                    listar_viatura_storage,)
+                    listar_viatura_storage,
+                    registrar_ocorrencia_storage)
 
 SITUACOES_VALIDAS = ("operando", "manutencao", "baixada")
 
@@ -78,3 +79,21 @@ def listar_viatura_service():
     else:
         return (True, resultado)
         
+def registrar_ocorrencia_service(sdo, data, tipo, local, descricao):
+    if not sdo:
+        return (False, "É necessário preencher o número do SDO.")
+    if not data:
+        return (False, "É necessário preencher a data.")
+    if not tipo:
+        return (False, "É necessário preencher o tipo de ocorrência.")
+    if not local:
+        return (False, "É necessário preencher o local da ocorrência.")
+    if not descricao:
+        return (False, "É necessário preencher a descrição da ocorrencia.")
+    
+    try:
+        id_gerado = registrar_ocorrencia_storage(sdo, data, tipo, local, descricao)
+    except sqlite3.IntegrityError:
+        return (False, f"Esse SDO já existe na data {data}")
+    
+    return (True, id_gerado)

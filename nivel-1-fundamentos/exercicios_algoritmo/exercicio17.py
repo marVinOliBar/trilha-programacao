@@ -1,54 +1,51 @@
-""" FUNÇÃO: tickets_por_prioridade_alta
-FAZ: recebe a lista tickets com dicionários, filtra a lista tickets, agrupa os dados de prioridade por cliente, constroi uma nova lista de dicionários, ordena a nova lista
-e devolve uma lista de dicionários
-ENTRADA: lista tickets com (dicts) e chaves id (int), cliente (str), prioridade (str), horas_aberto (int)
-SAÍDA: lista tickets_filtrados com (dicts) e chaves cliente (str), tickets_criticos (int)
-REGRA: a função recebe a lista tickets como argumento,
-    Bloco 1 - Filter
-    . declarar uma variavel e atribuir a ela o resultado do filtro para prioridade alta e mais de 6 horas em aberto.
-    Bloco 2 - Agrupamento
-    . declara uma variável contador e atribui dicionario vazio a ela
-    . percorre a lista filtrada e atribui o valor da chave 'cliente' a variável chave.
-    . verifica se chave NÃO está dentro do dicionário contador
-    ..se sim, adiciona o valor zero ao dicionário com a chave
-    . adiciona o valor 1 ao dicionario com a chave
-    Bloco 3 - Map
-    . declara nova variavel e atribui uma list comprehension construindo dicionários com as chaves 'cliente' (str) e 'tickets_criticos' (int) atribuindo a elas os valores obtidos
-    do agrupamento.
-    Bloco 4 - Sort
-    . ordena a nova lista de dicionarios pela quantidade de tickets abertos, em ordem decrescente.
-    Bloco 5
-    . retorna com o valor da lista_ordenada. 
-EXCEÇÕES: Não há exceção — o enunciado garante que a lista vem bem formada; tickets que não passam nos filtros não são erro, são filtro implícito. """
-
-
-tickets = [
-    {"id": 101, "cliente": "acme",     "prioridade": "alta",   "horas_aberto": 12},
-    {"id": 102, "cliente": "globex",   "prioridade": "baixa",  "horas_aberto": 48},
-    {"id": 103, "cliente": "acme",     "prioridade": "alta",   "horas_aberto": 3},
-    {"id": 104, "cliente": "initech",  "prioridade": "media",  "horas_aberto": 30},
-    {"id": 105, "cliente": "globex",   "prioridade": "alta",   "horas_aberto": 8},
-    {"id": 106, "cliente": "acme",     "prioridade": "media",  "horas_aberto": 5},
-    {"id": 107, "cliente": "initech",  "prioridade": "alta",   "horas_aberto": 20},
-    {"id": 108, "cliente": "globex",   "prioridade": "alta",   "horas_aberto": 1},
+vendas = [
+    {"produto": "caneta",   "categoria": "papelaria",  "valor": 5.50,  "quantidade": 3},
+    {"produto": "caderno",  "categoria": "papelaria",  "valor": 25.00, "quantidade": 2},
+    {"produto": "mouse",    "categoria": "eletronico", "valor": 80.00, "quantidade": 1},
+    {"produto": "teclado",  "categoria": "eletronico", "valor": 150.00,"quantidade": 2},
+    {"produto": "lapis",    "categoria": "papelaria",  "valor": 2.00,  "quantidade": 10},
+    {"produto": "fone",     "categoria": "eletronico", "valor": 200.00,"quantidade": 1},
+    {"produto": "borracha", "categoria": "papelaria",  "valor": 1.50,  "quantidade": 5},
+    {"produto": "monitor",  "categoria": "eletronico", "valor": 900.00,"quantidade": 1},
 ]
 
-# Quero saber quantos tickets de prioridade alta cada cliente tem em aberto há mais de 6 horas. Ordenado do cliente com mais tickets críticos pro com menos.
+"""
+Quero o faturamento total por categoria, considerando apenas vendas cuja linha (valor × quantidade) seja de no mínimo R$ 10,00. Ordenado do maior faturamento pro menor.
+"""
 
-def tickets_por_prioridade_alta(tickets):
-    filtro_prioridadealta_maisdeseishoras = [t for t in tickets if t['prioridade'] == 'alta' and t['horas_aberto'] > 6]
+""" MODELAGEM:
+FAZ: recebe uma lista de dicionários e devolve uma lista de dicionários contendo categoria e faturamento (valor x quantidade, apenas para itens que tenham faturamento unitário igual
+ou maior a 10). Ordena os dicionários por faturamento (maior para menor)
+ENTRADA: lista venda (dict) com chaves produto (str), categoria (str), valor (float), quantidade (int)
+SAÍDA: lista categoria_faturamento_ordenada (dict) com duas chaves, categoria (sstr) e faturamento (float). ordenada por faturamento do maior para o menor.
+REGRA: a função recebe a lista vendas (dict) como argumento, calcula o faturamento de cada linha (valor x quantidade), filtra (retira) os dicionários cujo faturamento é menor que 10.0,
+agrupa por categoria e retorna com uma lista categoria_faturamento_ordenada (dict) por categoria e faturamento. ordenada pelo faturamento, do maior para o menor.
+EXCEÇÃO: Não há exceção, pois o enunciado garante que as listas vêm bem formadas; vendas com linha < 10 não são erro, são filtradas (filtro implícito).
+ """
+ 
+""" MULTI-STEP DECOMPOSITION:
+Bloco 1 - list comprehension: filtra itens cujo faturamento seja menor que 10.
+Bloco 2 - dict-acumulator: fazer o agrupamento das chaves categoria e faturamento.
+Bloco 3 - construção da lista: constrói a nova lista de dicionários com as chaves categoria e quantidade.
+Bloco 4 - ordenação: ordena a nova lista criada e agrupada pela chave faturamento, do maior para o menor.saída: 
+"""
+def faturamento_das_categorias(vendas):
+    lista_filtrada = [venda for venda in vendas if venda["valor"] * venda["quantidade"] >= 10]
     
-    contador = {}
-    for ticket in filtro_prioridadealta_maisdeseishoras:
-        chave = ticket['cliente']
-        if chave not in contador:
-            contador[chave] = 0
-        contador[chave] += 1
+    faturamento = {}
+    for venda in lista_filtrada:
+        chave = venda["categoria"]
+        valor = venda["valor"] * venda["quantidade"]
+        if chave not in faturamento:
+            faturamento[chave] = 0
+        faturamento[chave] += valor
+        
+    nova_lista = []
+    for chave, valor in faturamento.items():
+        nova_lista.append({"categoria": chave, "faturamento": valor})
     
-    lista_dicionarios = [{'cliente': nome, 'tickets_criticos': quantidade} for nome, quantidade in contador.items()]
+    ordenada = sorted(nova_lista, key=lambda item: item["faturamento"], reverse=True)
     
-    tickets_filtrados = sorted(lista_dicionarios, key=lambda d: -d['tickets_criticos'])
-    
-    return tickets_filtrados
+    return ordenada
 
-print(tickets_por_prioridade_alta(tickets))
+print(faturamento_das_categorias(vendas))

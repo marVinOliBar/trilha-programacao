@@ -1,60 +1,54 @@
-commits = [
-    {"author": "ana", "message": "fix login bug"},
-    {"author": "bruno", "message": "add tests"},
-    {"author": "ana", "message": "refactor auth"},
-    {"author": "carla", "message": "update readme"},
-    {"author": "bruno", "message": "fix typo"},
-    {"author": "ana", "message": "add logging"},
+""" FUNÇÃO: tickets_por_prioridade_alta
+FAZ: recebe a lista tickets com dicionários, filtra a lista tickets, agrupa os dados de prioridade por cliente, constroi uma nova lista de dicionários, ordena a nova lista
+e devolve uma lista de dicionários
+ENTRADA: lista tickets com (dicts) e chaves id (int), cliente (str), prioridade (str), horas_aberto (int)
+SAÍDA: lista tickets_filtrados com (dicts) e chaves cliente (str), tickets_criticos (int)
+REGRA: a função recebe a lista tickets como argumento,
+    Bloco 1 - Filter
+    . declarar uma variavel e atribuir a ela o resultado do filtro para prioridade alta e mais de 6 horas em aberto.
+    Bloco 2 - Agrupamento
+    . declara uma variável contador e atribui dicionario vazio a ela
+    . percorre a lista filtrada e atribui o valor da chave 'cliente' a variável chave.
+    . verifica se chave NÃO está dentro do dicionário contador
+    ..se sim, adiciona o valor zero ao dicionário com a chave
+    . adiciona o valor 1 ao dicionario com a chave
+    Bloco 3 - Map
+    . declara nova variavel e atribui uma list comprehension construindo dicionários com as chaves 'cliente' (str) e 'tickets_criticos' (int) atribuindo a elas os valores obtidos
+    do agrupamento.
+    Bloco 4 - Sort
+    . ordena a nova lista de dicionarios pela quantidade de tickets abertos, em ordem decrescente.
+    Bloco 5
+    . retorna com o valor da lista_ordenada. 
+EXCEÇÕES: Não há exceção — o enunciado garante que a lista vem bem formada; tickets que não passam nos filtros não são erro, são filtro implícito. """
+
+
+tickets = [
+    {"id": 101, "cliente": "acme",     "prioridade": "alta",   "horas_aberto": 12},
+    {"id": 102, "cliente": "globex",   "prioridade": "baixa",  "horas_aberto": 48},
+    {"id": 103, "cliente": "acme",     "prioridade": "alta",   "horas_aberto": 3},
+    {"id": 104, "cliente": "initech",  "prioridade": "media",  "horas_aberto": 30},
+    {"id": 105, "cliente": "globex",   "prioridade": "alta",   "horas_aberto": 8},
+    {"id": 106, "cliente": "acme",     "prioridade": "media",  "horas_aberto": 5},
+    {"id": 107, "cliente": "initech",  "prioridade": "alta",   "horas_aberto": 20},
+    {"id": 108, "cliente": "globex",   "prioridade": "alta",   "horas_aberto": 1},
 ]
 
-"""Você tem uma lista de commits de um repositório. Cada commit é um dict com author e message. 
-Devolva uma lista de dicts com cada autor e quantos commits ele fez, ordenada do maior número de commits pro menor.
+# Quero saber quantos tickets de prioridade alta cada cliente tem em aberto há mais de 6 horas. Ordenado do cliente com mais tickets críticos pro com menos.
 
-Saída esperada
-[
-    {"author": "ana", "commits": 3},
-    {"author": "bruno", "commits": 2},
-    {"author": "carla", "commits": 1},
-]
-
-FAZ: recebe a lista commits com dicionários de chaves 'author' (str) e 'message' (str) e devolve uma lista de dicionários
-com os nomes dos autores e quantidade de commits realizadas. chaves 'author' (str) e 'commits' (int).
-ENTRADA: lista commit contendo dicionários com as chaves 'author' (str) e 'message' (str).
-SAÍDA: lista contendo dicionários com as chaves 'author' (str) e 'commits' (int)
-REGRA:
-BLOCO 1
-    recebe a lista commits contendo dicionários com as chaves 'author' (str) e 'message' (str) como argumento
-    declara uma variavel contador e atribui a ela um dicionario vazio
-BLOCO 2 - group by count
-    percorre a lista commits
-        declara uma variavel chave e atribui a ela o valor da chave 'author' do dicionário
-        verifica se não há o valor da variável chave dentro do dicionário contador
-            se sim, atribui ao valor da variavel chave dentro do dicionario contador o valor 0
-        adiciona ao valor da variavel chave dentro do dicionario contador 1
-Bloco 3 - map
-    declara a variavel lista_inicial e atribui a ela uma lista vazia
-    percorre o dicionario contador
-        declara a variavel author e atribui a ela a chave do dicionario
-        declara a variavel commit e atribui a ela o valor do dicionario
-        adiciona a lista_inicial um dicionario com as chaves 'author' (valor author) e 'commits' (valor commits)
-Bloco 4 - sort
-declara a variavel lista_ordenada e atribuia a ela a ordenação da lista_inicial de dicionarios 
-pelo valor da chave 'commits' do maior para o menor.
-retorna com o lista_ordenada
-"""
-def commits_by_authors(commits):
+def tickets_por_prioridade_alta(tickets):
+    filtro_prioridadealta_maisdeseishoras = [t for t in tickets if t['prioridade'] == 'alta' and t['horas_aberto'] > 6]
     
     contador = {}
-    for commit in commits:
-        chave = commit['author']
+    for ticket in filtro_prioridadealta_maisdeseishoras:
+        chave = ticket['cliente']
         if chave not in contador:
             contador[chave] = 0
-        contador[chave] +=1
+        contador[chave] += 1
     
-    lista_inicial = [{'author': author, 'commits': qtd_commits} for author, qtd_commits in contador.items()]
-        
-    lista_ordenada = sorted(lista_inicial, key=lambda item: item['commits'], reverse=True)
+    lista_dicionarios = [{'cliente': nome, 'tickets_criticos': quantidade} for nome, quantidade in contador.items()]
     
-    return lista_ordenada
+    tickets_filtrados = sorted(lista_dicionarios, key=lambda d: -d['tickets_criticos'])
+    
+    return tickets_filtrados
 
-print(commits_by_authors(commits))
+print(tickets_por_prioridade_alta(tickets))

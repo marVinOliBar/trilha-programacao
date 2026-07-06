@@ -92,3 +92,4 @@ def registrar_ocorrencia():
         print(dado)
     else:
         print(f"A ocorrência de SDO nº {sdo} da data {data} foi gerada com sucesso.")
+

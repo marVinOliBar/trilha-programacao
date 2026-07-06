@@ -75,5 +75,3 @@ def registrar_ocorrencia_storage(sdo, data, tipo, local, descricao):
     conexao.commit()
     conexao.close()
     return resultado
-
-registrar_ocorrencia_storage(2, "2026-06-29", "incêndio", "rua x", "teste")

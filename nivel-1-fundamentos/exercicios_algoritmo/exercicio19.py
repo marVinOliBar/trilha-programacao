@@ -1,60 +1,82 @@
 commits = [
-    {"author": "ana", "message": "fix login bug"},
-    {"author": "bruno", "message": "add tests"},
-    {"author": "ana", "message": "refactor auth"},
-    {"author": "carla", "message": "update readme"},
-    {"author": "bruno", "message": "fix typo"},
-    {"author": "ana", "message": "add logging"},
+    {"author": "ana",   "timestamp": "2026-07-06 09:15"},  # segunda
+    {"author": "bruno", "timestamp": "2026-07-06 14:20"},  # segunda
+    {"author": "ana",   "timestamp": "2026-07-07 10:00"},  # terça
+    {"author": "carla", "timestamp": "2026-07-04 22:45"},  # sábado
+    {"author": "ana",   "timestamp": "2026-07-06 18:30"},  # segunda
+    {"author": "bruno", "timestamp": "2026-07-05 11:00"},  # domingo
+    {"author": "carla", "timestamp": "2026-07-07 16:15"},  # terça
 ]
 
-"""Você tem uma lista de commits de um repositório. Cada commit é um dict com author e message. 
-Devolva uma lista de dicts com cada autor e quantos commits ele fez, ordenada do maior número de commits pro menor.
-
-Saída esperada
-[
-    {"author": "ana", "commits": 3},
-    {"author": "bruno", "commits": 2},
-    {"author": "carla", "commits": 1},
-]
-
-FAZ: recebe a lista commits com dicionários de chaves 'author' (str) e 'message' (str) e devolve uma lista de dicionários
-com os nomes dos autores e quantidade de commits realizadas. chaves 'author' (str) e 'commits' (int).
-ENTRADA: lista commit contendo dicionários com as chaves 'author' (str) e 'message' (str).
-SAÍDA: lista contendo dicionários com as chaves 'author' (str) e 'commits' (int)
-REGRA:
-BLOCO 1
-    recebe a lista commits contendo dicionários com as chaves 'author' (str) e 'message' (str) como argumento
-    declara uma variavel contador e atribui a ela um dicionario vazio
-BLOCO 2 - group by count
-    percorre a lista commits
-        declara uma variavel chave e atribui a ela o valor da chave 'author' do dicionário
-        verifica se não há o valor da variável chave dentro do dicionário contador
-            se sim, atribui ao valor da variavel chave dentro do dicionario contador o valor 0
-        adiciona ao valor da variavel chave dentro do dicionario contador 1
-Bloco 3 - map
-    declara a variavel lista_inicial e atribui a ela uma lista vazia
-    percorre o dicionario contador
-        declara a variavel author e atribui a ela a chave do dicionario
-        declara a variavel commit e atribui a ela o valor do dicionario
-        adiciona a lista_inicial um dicionario com as chaves 'author' (valor author) e 'commits' (valor commits)
-Bloco 4 - sort
-declara a variavel lista_ordenada e atribuia a ela a ordenação da lista_inicial de dicionarios 
-pelo valor da chave 'commits' do maior para o menor.
-retorna com o lista_ordenada
 """
-def commits_by_authors(commits):
+Saída Esperada:
+[
+    {"dia_semana": "segunda", "commits": 3},
+    {"dia_semana": "terça",   "commits": 2},
+    {"dia_semana": "sábado",  "commits": 1},
+    {"dia_semana": "domingo", "commits": 1},
+]
+
+Problema: Você tem uma lista de commits com autor e timestamp. Devolva uma lista de dicts com cada dia da semana e o total de commits feitos naquele dia,
+ordenada do dia com mais commits pro com menos.
+
+FAZ: recebe lista commits de dicionários com chaves 'author' (str) e 'timestamp' (str), transforma o formato das datas para dias da semana e depois os agrupa por contagem de quantos
+commits foram efetuados naquele dia. devolve lista de dicionarios com as chaves 'dia_semana' (str) e 'commits' (int)
+ENTRADA: lista commits com dicionários com chaves 'author' (str) e 'timestamp' (str)
+SAÍDA: lista com dicionarios de chaves 'dia_semana' (str) e 'commits' (int)
+REGRA:
+
+BLOCO 1 - MAP
+    função recebe a lista commits como argumento
+    declara uma variável e atribui a ela uma lista modificada da lista commits, com chaves 'author' (str) e 'dia_semana' (str)
+
+BLOCO 2 - GROUP BY COUNT
+    declara variavel contador e atribui a ele um dicionario vazio
+    percorre a lista commits com a variavel commit
+        declara variavel chave e atribui a ela o valor da chave 'dia_semana'
+        verifica se não há valor da variavel chave dentro do dicionario contador
+            se sim, atribui a variavel chave do dicionario contador o valor 0
+        soma + 1 a variavel chave do dicionario contador
+
+BLOCO 3 - MAP (.items())
+    declara variavel lista_inicial e atribui a ela uma lista de dicionários com as chaves 'dia_semana' (str), com a chave do dicionario contador, e 'commits' (int), com o valor do
+dicionario do contador. Usando list comprehension
+
+BLOCO 4 - SORT
+    declara variavel lista_ordenada e atribui a ela a ordenação da lista_inicial pelos valores da chave 'commits', do maior para o menor.
+    
+BLOCO 5 - return
+    retorna a variavel lista_ordenada
+        
+"""
+from datetime import datetime
+
+def dias_semana(commits):
+    indice_semana = ['segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sabado', 'domingo']
+    novo_commits = []
+    for commit in commits:
+        objeto_data = datetime.fromisoformat(commit['timestamp'])
+        dia = indice_semana[objeto_data.weekday()]
+        novo_commits.append({'author': commit['author'], 'dia_semana': dia})
+    
+    return novo_commits
+
+
+def commits_por_dia_semana(commits):
+    
+    novo_commits = dias_semana(commits)
     
     contador = {}
-    for commit in commits:
-        chave = commit['author']
+    for commit in novo_commits:
+        chave = commit['dia_semana']
         if chave not in contador:
             contador[chave] = 0
-        contador[chave] +=1
+        contador[chave] += 1
     
-    lista_inicial = [{'author': author, 'commits': qtd_commits} for author, qtd_commits in contador.items()]
-        
-    lista_ordenada = sorted(lista_inicial, key=lambda item: item['commits'], reverse=True)
+    lista_inicial = [{'dia_semana': dia, 'commits': qtd_commits} for dia, qtd_commits in contador.items()]
+    
+    lista_ordenada = sorted(lista_inicial, key=lambda items: items['commits'], reverse=True)
     
     return lista_ordenada
-
-print(commits_by_authors(commits))
+    
+print(commits_por_dia_semana(commits))

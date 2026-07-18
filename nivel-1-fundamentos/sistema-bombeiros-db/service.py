@@ -4,7 +4,8 @@ from storage import(registrar_viatura_storage,
                     remover_viatura_storage,
                     editar_viatura_storage,
                     listar_viatura_storage,
-                    registrar_ocorrencia_storage)
+                    registrar_ocorrencia_storage,
+                    listar_ocorrencia_storage)
 
 SITUACOES_VALIDAS = ("operando", "manutencao", "baixada")
 
@@ -97,3 +98,10 @@ def registrar_ocorrencia_service(sdo, data, tipo, local, descricao):
         return (False, f"Esse SDO já existe na data {data}")
     
     return (True, id_gerado)
+
+def listar_ocorrencia_service():
+    resultado = listar_ocorrencia_storage()
+    if not resultado:
+        return (False, "Nenhuma ocorrência registrada.")
+    else:
+        return (True, resultado)

@@ -142,3 +142,13 @@ REGRA:
 . encerra conexao
 . retorna a variavel resultado
 EXCEÇÕES: não há possibilidade de erros.
+
+FUNÇÃO: listar_ocorrencia_service
+FAZ: recebe a chamada da interface, chama o storage, recebe o retorno de storage, valida o retorno de storage e retorna para a interface com (True, dados) ou (False, "mensagem") conforme o contrato já estabelecido. 
+ENTRADA: nenhuma
+SAÍDA: tupla (True, com a lista de tuplas recebida do storage) ou (False, "mensagem") conforme o contrato.
+REGRA:
+. recebe a chamada da interface
+. declara variável resultado e atribui a ela o retorno do storage
+. retornar (True, resultado)
+EXCEÇÕES: não há possibilidade de erros.

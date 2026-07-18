@@ -127,3 +127,18 @@ REGRA:
 .. se sqlite3.IntegrityError: retorna (False, "já existe ocorrência com esse SDO nesta data")
 . retorna (True, resultado)
 EXCEÇÕES: sqlite3.IntegrityError (violação de UNIQUE composto sdo+data).
+
+
+FUNÇÃO: listar_ocorrencia_storage
+FAZ: recebe a chamada externa e retorna todas as linhas da tabela ocorrencia.
+ENTRADA: nenhuma
+SAÍDA: lista de tuplas contendo as colunas sdo, data, tipo, local, descricao dentro da variavel resultado.
+REGRA:
+. abre a conexao
+. cria cursor para a conexao
+. executa PRAGMA para chaves estrangeiras
+. executa SELECT para todos os campos dentro da tabela ocorrencia
+. cria variavel resultado e atribui a ela todas as linhas da tabela
+. encerra conexao
+. retorna a variavel resultado
+EXCEÇÕES: não há possibilidade de erros.

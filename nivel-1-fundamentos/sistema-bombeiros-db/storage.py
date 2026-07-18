@@ -75,3 +75,12 @@ def registrar_ocorrencia_storage(sdo, data, tipo, local, descricao):
     conexao.commit()
     conexao.close()
     return resultado
+
+def listar_ocorrencia_storage():
+    conexao = sqlite3.connect(CAMINHO_BD)
+    cursor = conexao.cursor()
+    cursor.execute("PRAGMA foreign_keys = ON")
+    cursor.execute("SELECT sdo, data, tipo, local, descricao FROM ocorrencia")
+    resultado = cursor.fetchall()
+    conexao.close()
+    return resultado

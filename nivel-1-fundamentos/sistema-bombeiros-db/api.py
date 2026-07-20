@@ -4,5 +4,7 @@ app = FastAPI()
 
 @app.get("/ocorrencia")
 def listar_ocorrencia():
-    sucesso, dado = listar_ocorrencia_service()
-    return dado
+    _, dado = listar_ocorrencia_service()
+    ocorrencias_etiquetadas = [{'sdo': ocorrencia[0], 'data': ocorrencia[1], 'tipo': ocorrencia[2], 'local': ocorrencia[3], 'descricao': ocorrencia[4]}
+                              for ocorrencia in dado]
+    return ocorrencias_etiquetadas

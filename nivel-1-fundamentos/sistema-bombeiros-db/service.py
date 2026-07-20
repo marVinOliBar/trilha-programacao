@@ -101,7 +101,4 @@ def registrar_ocorrencia_service(sdo, data, tipo, local, descricao):
 
 def listar_ocorrencia_service():
     resultado = listar_ocorrencia_storage()
-    if not resultado:
-        return (False, "Nenhuma ocorrência registrada.")
-    else:
-        return (True, resultado)
+    return (True, resultado)

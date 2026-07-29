@@ -5,7 +5,8 @@ from storage import(registrar_viatura_storage,
                     editar_viatura_storage,
                     listar_viatura_storage,
                     registrar_ocorrencia_storage,
-                    listar_ocorrencia_storage)
+                    listar_ocorrencia_storage,
+                    remover_ocorrencia_storage,)
 
 SITUACOES_VALIDAS = ("operando", "manutencao", "baixada")
 
@@ -23,7 +24,6 @@ def registrar_viatura_service(prefixo, quilometragem, estacao, situacao):
     
     return (True, prefixo)
     
-
 def buscar_viatura_service(termo):
     if not termo:
             return (False, "Digite um termo para a busca.")
@@ -35,7 +35,6 @@ def buscar_viatura_service(termo):
     else:
         return (True, resultado)
     
-
 def remover_viatura_service(prefixo):
     if not prefixo:
         return (False, "É necessário digitar um prefixo.")
@@ -102,3 +101,20 @@ def registrar_ocorrencia_service(sdo, data, tipo, local, descricao):
 def listar_ocorrencia_service():
     resultado = listar_ocorrencia_storage()
     return (True, resultado)
+
+def remover_ocorrencia_service(sdo, data):
+    if not sdo:
+        return (False, "É necessário digitar um número de SDO")
+    
+    if not data:
+        return (False, "É necessário digitar uma data")
+    
+    try:
+        resultado = remover_ocorrencia_storage(sdo, data)
+    except sqlite3.IntegrityError:
+        return (False, "Não é possível remover a ocorrência. Ela possui atendimentos registrados.")
+    
+    if resultado == 0:
+        return (False, "Nenhuma ocorrência foi registrada com esse número nessa data.")
+    else:
+        return (True, resultado)

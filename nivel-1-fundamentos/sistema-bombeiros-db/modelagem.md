@@ -152,3 +152,18 @@ REGRA:
 . declara variável resultado e atribui a ela o retorno do storage
 . retornar (True, resultado)
 EXCEÇÕES: não há possibilidade de erros.
+
+FUNÇÃO: remover_ocorrencia_storage
+FAZ: recebe o argumento, executa a remoção dos dados recebidos dentro do banco e retorna a quantidade de linhas removidas.
+ENTRADA: SDO + data (usuário não vê a ID).
+SAÍDA: variável com o valor de linhas removidas.
+REGRA:
+. abre conexao
+. cria cursor para a conexao
+. executa PRAGMA para chaves estrangeiras
+. executa DELETE para o argumento apresentado para a função
+. cria a variavel resultado e atribui a ela a quantidade de linhas removidas pelo DELETE
+. envia alterações para o banco
+. encerra a conexao
+. retorna resultado
+EXCEÇÕES: pode levantar sqlite3.IntegrityError quando a ocorrência tem atendimento vinculado (FK). Não há tratamento aqui por design; deixa subir pro service.

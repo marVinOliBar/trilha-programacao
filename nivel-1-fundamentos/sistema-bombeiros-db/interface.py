@@ -3,7 +3,9 @@ from service import(registrar_viatura_service,
                     remover_viatura_service,
                     editar_viatura_service,
                     listar_viatura_service,
-                    registrar_ocorrencia_service,)
+                    registrar_ocorrencia_service,
+                    listar_ocorrencia_service,
+                    remover_ocorrencia_service,)
 
 def registrar_viatura():
     
@@ -93,3 +95,28 @@ def registrar_ocorrencia():
     else:
         print(f"A ocorrência de SDO nº {sdo} da data {data} foi gerada com sucesso.")
 
+def listar_ocorrencia():
+    sucesso, dado = listar_ocorrencia_service()
+    
+    if sucesso:
+        for linha in dado:
+            sdo, data, _, _, _ = linha
+            print(f"SDO: {sdo} | data: {data}")
+    else:
+        print(dado)
+    
+def remover_ocorrencia():
+    try:
+        sdo = int(input("Digite o número do SDO que deseja remover: "))
+    except ValueError:
+        print ("Digite apenas números")
+        return 
+    
+    data = input("Digite a data que deseja remover (padrão: AAAA-MM-DD): ").strip().lower()
+    
+    sucesso, dado = remover_ocorrencia_service(sdo, data)
+    
+    if not sucesso:
+        print(dado)
+    else:
+        print(f"Você removeu a ocorrência {sdo} de {data} com sucesso.")

@@ -3,7 +3,9 @@ from interface import(registrar_viatura,
                       remover_viatura,
                       editar_viatura,
                       listar_viatura,
-                      registrar_ocorrencia,)
+                      registrar_ocorrencia,
+                      listar_ocorrencia,
+                      remover_ocorrencia,)
 
 def main():
     
@@ -16,6 +18,8 @@ def main():
         print("4 - Editar Viatura")
         print("5 - Listar Viatura")
         print("6 - Registrar Ocorrência")
+        print("7 - Lista Ocorrência")
+        print("8 - Remover Ocorrência")
         print("0 - Sair")
         
         try:
@@ -35,6 +39,10 @@ def main():
             listar_viatura()
         elif opcao == 6:
             registrar_ocorrencia()
+        elif opcao == 7:
+            listar_ocorrencia()
+        elif opcao == 8:
+            remover_ocorrencia()
         elif opcao == 0:
             break
         else:

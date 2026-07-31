@@ -89,9 +89,11 @@ def remover_ocorrencia_storage(sdo, data):
     conexao = sqlite3.connect(CAMINHO_BD)
     cursor = conexao.cursor()
     cursor.execute("PRAGMA foreign_keys = ON")
-    cursor.execute("DELETE FROM ocorrencia WHERE sdo = ? AND data = ?",
-                   (sdo, data))
-    resultado = cursor.rowcount
-    conexao.commit()
-    conexao.close()
+    try:
+        cursor.execute("DELETE FROM ocorrencia WHERE sdo = ? AND data = ?",
+                    (sdo, data))
+        resultado = cursor.rowcount
+        conexao.commit()
+    finally:
+        conexao.close()
     return resultado

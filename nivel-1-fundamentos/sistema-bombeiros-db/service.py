@@ -113,7 +113,7 @@ def remover_ocorrencia_service(sdo, data):
         resultado = remover_ocorrencia_storage(sdo, data)
     except sqlite3.IntegrityError:
         return (False, "Não é possível remover a ocorrência. Ela possui atendimentos registrados.")
-    
+        
     if resultado == 0:
         return (False, "Nenhuma ocorrência foi registrada com esse número nessa data.")
     else:

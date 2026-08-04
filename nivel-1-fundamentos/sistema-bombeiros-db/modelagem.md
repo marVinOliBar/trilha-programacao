@@ -167,3 +167,16 @@ REGRA:
 . encerra a conexao
 . retorna resultado
 EXCEÇÕES: pode levantar sqlite3.IntegrityError quando a ocorrência tem atendimento vinculado (FK). Não há tratamento aqui por design; deixa subir pro service.
+
+FUNÇÃO: buscar_ocorrencia_storage
+FAZ: recebe dois argumentos (sdo, data) e retorna se há essa ocorrência na tabela.
+ENTRADA: recebe sdo (int) e data (str)
+SAÍDA: lista com 1 tupla contendo sdo (int), data (str), tipo (str), local (str), descrição (str)
+REGRA:
+. abre conexao
+. cria cursor para a conexao
+. executa restrição para chaves estrangeiras
+. executa busca para os argumentos apresentados para a função
+. cria variável resultado e atribui a ela a linha com os dados (sdo, data, tipo, local, descrição) que possui os argumentos (sdo, data) apresentados
+. retorna o resultado
+EXCEÇÕES: não há.

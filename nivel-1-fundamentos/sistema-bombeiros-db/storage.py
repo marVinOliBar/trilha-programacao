@@ -105,3 +105,17 @@ def remover_ocorrencia_storage(sdo, data):
     finally:
         conexao.close()
     return resultado
+
+def buscar_ocorrencia_storage(sdo, data):
+    conexao = sqlite3.connect(CAMINHO_BD)
+    cursor = conexao.cursor()
+    cursor.execute("PRAGMA foreign_keys = ON")
+    try:
+        cursor.execute("SELECT sdo, data, tipo, local, descricao FROM ocorrencia WHERE sdo = ? AND data = ?",
+                   (sdo, data)
+        )
+        resultado = cursor.fetchall()
+    finally:
+        conexao.close()
+    return resultado
+    

@@ -180,3 +180,19 @@ REGRA:
 . cria variável resultado e atribui a ela a linha com os dados (sdo, data, tipo, local, descrição) que possui os argumentos (sdo, data) apresentados
 . retorna o resultado
 EXCEÇÕES: não há.
+
+FUNÇÃO: buscar_ocorrencia_service
+FAZ: busca uma ocorrencia cadastrada na tabela ocorrencia
+ENTRADA: sdo (int) e data (str)
+SAÍDA: tupla (False, mensagem de erro) ou (True, variável)
+REGRA:
+.recebe sdo e data como argumentos
+.verifica se não foi digitado o sdo
+..se sim, retorna (False, "digite um número de SDO")
+.verifica se não foi digitado a data
+..se sim, retorna (False, "digite uma data")
+.cria variável resultado e atribui a ela o retorno de buscar_ocorrencia_storage
+.verifica se se resultado está vazio
+..se sim, retorna (False, "Não há SDO cadastrado nessa data")
+..se não, retorna (True, resultado)
+EXCEÇÕES: não há

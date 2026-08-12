@@ -6,7 +6,9 @@ from storage import(registrar_viatura_storage,
                     listar_viatura_storage,
                     registrar_ocorrencia_storage,
                     listar_ocorrencia_storage,
-                    remover_ocorrencia_storage,)
+                    remover_ocorrencia_storage,
+                    buscar_ocorrencia_storage,
+                    editar_ocorrencia_storage,)
 
 SITUACOES_VALIDAS = ("operando", "manutencao", "baixada")
 
@@ -118,3 +120,33 @@ def remover_ocorrencia_service(sdo, data):
         return (False, "Nenhuma ocorrência foi registrada com esse número nessa data.")
     else:
         return (True, resultado)
+    
+def buscar_ocorrencia_service(sdo, data):
+    if not sdo:
+        return(False, "digite um número de SDO")
+    if not data:
+        return(False, "é necessário digitar uma data")
+    resultado = buscar_ocorrencia_storage(sdo, data)
+    if not resultado:
+        return (False, "Não há SDO cadastrado na data informada.")
+    else:
+        return (True, resultado)
+    
+def editar_ocorrencia_service(sdo, data, tipo, local, descricao):
+    if not sdo:
+        return(False, "É necessário preencher o número do SDO.")
+    if not data:
+        return(False, "É necessário preencher a data.")
+    if not tipo:
+        return(False, "É necessário preencher o tipo.")
+    if not local:
+        return(False, "É necessário preencher o local.")
+    if not descricao:
+        return(False, "É necessário preencher a descrição.")
+    
+    resultado = editar_ocorrencia_storage(sdo, data, tipo, local, descricao)
+    
+    if resultado == 0:
+        return(False, "A ocorrência não foi editada.")
+    else:
+        return(True, resultado)

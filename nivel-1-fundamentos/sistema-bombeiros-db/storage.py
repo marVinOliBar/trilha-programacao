@@ -118,4 +118,16 @@ def buscar_ocorrencia_storage(sdo, data):
     finally:
         conexao.close()
     return resultado
-    
+ 
+def editar_ocorrencia_storage(sdo, data, tipo, local, descricao):
+    conexao = sqlite3.connect(CAMINHO_BD)
+    cursor = conexao.cursor()
+    cursor.execute("PRAGMA foreign_keys = ON")
+    try:
+        cursor.execute("UPDATE ocorrencia SET tipo = ?, local = ?, descricao = ? WHERE sdo = ? AND data = ?",
+                       (tipo, local, descricao, sdo, data,))
+        resultado = cursor.rowcount
+        conexao.commit()
+    finally:
+        conexao.close()
+    return resultado

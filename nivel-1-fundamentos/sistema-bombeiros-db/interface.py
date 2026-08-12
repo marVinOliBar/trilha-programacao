@@ -5,7 +5,9 @@ from service import(registrar_viatura_service,
                     listar_viatura_service,
                     registrar_ocorrencia_service,
                     listar_ocorrencia_service,
-                    remover_ocorrencia_service,)
+                    remover_ocorrencia_service,
+                    buscar_ocorrencia_service,
+                    editar_ocorrencia_service)
 
 def registrar_viatura():
     
@@ -120,3 +122,40 @@ def remover_ocorrencia():
         print(dado)
     else:
         print(f"Você removeu a ocorrência {sdo} de {data} com sucesso.")
+        
+def buscar_ocorrencia():
+    try:
+        sdo = int(input("Digite o número do SDO que deseja buscar: "))
+    except ValueError:
+        print("Digite apenas números")
+        return
+    
+    data = input("Digite a data do SDO que deseja buscar (padrão: AAAA-MM-DD): ").strip().lower()
+    
+    sucesso, dado = buscar_ocorrencia_service(sdo, data)
+    
+    if not sucesso:
+        print(dado)
+    else:
+        for linha in dado:
+            sdo, data, tipo, local, descricao = linha
+            print(f"SDO: {sdo} | data: {data} | tipo: {tipo} | local: {local} | descrição: {descricao}")
+            
+def editar_ocorrencia():
+    try:
+        sdo = int(input("Digite o número do SDO que deseja editar: "))
+    except ValueError:
+        print("Digite apenas números.")
+        return
+    
+    data = input("Digite a data do SDO que deseja editar (padrão: AAAA-MM-DD): ").strip().lower()
+    tipo = input("Digite o novo tipo de ocorrência para o SDO que deseja editar: ").strip().lower()
+    local = input("Digite o novo local do SDO que deseja editar: ").strip().lower()
+    descricao = input("Digite a nova descrição do SDO que deseja editar: ").strip().lower()
+    
+    sucesso, _ = editar_ocorrencia_service(sdo, data, tipo, local, descricao)
+    
+    if not sucesso:
+        print("Não foi possível editar os dados.")
+    else:
+        print(f"Os dados do SDO nº {sdo} da data {data} foram atualizados com sucesso.")

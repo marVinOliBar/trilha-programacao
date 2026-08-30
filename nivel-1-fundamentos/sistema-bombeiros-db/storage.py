@@ -131,3 +131,17 @@ def editar_ocorrencia_storage(sdo, data, tipo, local, descricao):
     finally:
         conexao.close()
     return resultado
+
+def buscar_id_ocorrencia_storage(sdo, data):
+    conexao = sqlite3.connect(CAMINHO_BD)
+    cursor = conexao.cursor()
+    cursor.execute("PRAGMA foreign_keys = ON")
+    try:
+        cursor.execute("SELECT id FROM ocorrencia WHERE sdo=? AND data=?", (sdo, data))
+        resultado = cursor.fetchone()
+    finally:
+        conexao.close()
+    if resultado is None:
+        return None
+    else:
+        return resultado[0]

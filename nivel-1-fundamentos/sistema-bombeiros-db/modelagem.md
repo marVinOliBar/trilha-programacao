@@ -128,7 +128,6 @@ REGRA:
 . retorna (True, resultado)
 EXCEÇÕES: sqlite3.IntegrityError (violação de UNIQUE composto sdo+data).
 
-
 FUNÇÃO: listar_ocorrencia_storage
 FAZ: recebe a chamada externa e retorna todas as linhas da tabela ocorrencia.
 ENTRADA: nenhuma
@@ -144,7 +143,7 @@ REGRA:
 EXCEÇÕES: não há possibilidade de erros.
 
 FUNÇÃO: listar_ocorrencia_service
-FAZ: recebe a chamada da interface, chama o storage, recebe o retorno de storage, valida o retorno de storage e retorna para a interface com (True, dados) ou (False, "mensagem") conforme o contrato já estabelecido. 
+FAZ: recebe a chamada da interface, chama o storage, recebe o retorno de storage, valida o retorno de storage e retorna para a interface com (True, dados) ou (False, "mensagem") conforme o contrato já estabelecido.
 ENTRADA: nenhuma
 SAÍDA: tupla (True, com a lista de tuplas recebida do storage) ou (False, "mensagem") conforme o contrato.
 REGRA:
@@ -195,4 +194,14 @@ REGRA:
 .verifica se se resultado está vazio
 ..se sim, retorna (False, "Não há SDO cadastrado nessa data")
 ..se não, retorna (True, resultado)
+EXCEÇÕES: não há
+
+FUNÇÃO: buscar_id_ocorrencia_storage
+FAZ: busca uma id e a retorna pra o service
+ENTRADA: sdo (int) e data (str)
+SAÍDA: id (int) ou None quando não encontra.
+REGRA:
+.faz a conexão
+.busca o id da tupla sdo, data como argumento e retorna ele
+.fecha a conexao
 EXCEÇÕES: não há

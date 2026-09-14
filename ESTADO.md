@@ -5,11 +5,8 @@
 
 ## CICLO ATUAL
 
-inicio: 2026-09-12
-sessoes: 0
-ultima_sessao: —
-alvo do ciclo: F0, F1 e F2 dadas; bordas no nível 2; join lógico em folha em branco
-revisao: na sessão 12
+sessoes: 6
+ultima_sessao: 2026-09-14 (4 sessões no dia)
 
 ## REPOSITÓRIOS
 
@@ -26,9 +23,14 @@ parado em: o service do atendimento, não escrito [repo]
 
 ## FUNDAMENTOS
 
-F0 ler erro e documentação — PENDENTE. Declarado por ele em 12SET: não sabe ler
-documentação. A skill antiga registrava o oposto como hábito consolidado, e
-por isso a lacuna ficou invisível [chat 12SET]
+F0 (a) anatomia do traceback — CONSOLIDADO. Revisar sessão 4
+F0 (b) documentação oficial — em treino
+firme: página pelo tipo do erro, entrada, âncora
+instável: seção × entrada (2 sessões seguidas);
+cadeia de subclasses lida de lado, não para cima
+novo: entrada pode ter atributos; cadeia para na
+fronteira do módulo
+F0 (c) doc × fórum × chute — PENDENTE
 F1 erro da linguagem — PENDENTE, e menor do que o código sugere [chat 12SET]
 try/finally: gesto memorizado para fechar conexão, dez vezes no mesmo
 contexto, sem transferência para outra situação
@@ -45,22 +47,36 @@ trilha-programacao; prontidao.py em escala-sgb tem, e é a exceção [repo]
 F6 git — PENDENTE como unidade; usa branch, merge, resolve conflito e
 .gitignore na prática [repo]
 
-## ESCADA DE BORDAS
+## PENDENTE DE FUNDAMENTO
 
-nível: 0 [assumido]
-evidência a favor de 1: os testes existentes cobrem borda de verdade — SDO vazio,
-SDO duplicado, virada de ano, data anterior à âncora, dict vazio. Mas todas essas
-bordas foram apontadas pelo instrutor, não levantadas por ele [chat/repo]
-A primeira sessão de F2 calibra; errar para baixo custa uma sessão.
+F0(c) doc × fórum × chute — abertura de sessão, 15 min
+bordas nível 1 (camadas) — abertura de sessão
+join lógico — reaparece na fatia 2, em SQL e em Python
+
+## BORDAS
+
+nivel 0 — EXPOSTO [sessão 4, 14SET]. Sem exercício ainda.
+borda = entrada numa fronteira da função (não é defeito,
+não é "retorno inesperado")
+três eixos: quantidade (0/1/muitos), correspondência
+(tem par / não tem / vários), valor (vazio, nulo, limite)
+três saídas: tratar, recusar, declarar fora de escopo
+fronteiras existem sem if no código: laço em 0 voltas,
+chave ausente no dicionário, divisão por zero
+nivel 1 — PENDENTE: os eixos mudam conforme a camada
+(lógica pura / storage / API). Sessão inteira.
 
 ## PADRÕES
 
-consolidado com validade — produção autônoma verificada, retenção não aferida [repo/chat]
+join lógico — degrau 2. Índice de consulta dado em 14SET.
+dicionário tem dois usos: acumulador (destino) e
+índice de consulta (fonte, não cresce, não é percorrido)
+regra do join: percorre o lado muitos, indexa o lado um
 filter · dict-acumulador · chave composta · dois acumuladores paralelos ·
 group by (count, sum, max, set) · map · sort multi-critério com chave negativa ·
 list e dict comprehension
 última aparição: ex27, 29AGO26. Vencem na sessão 6 se não reaparecerem.
-em treino — join lógico, degrau 1, 1 sessão [chat 02SET]
+em treino — join lógico, degrau 1, 2 sessões. Estoura na sessão 3.
 exemplar narrado dado no domínio livros/empréstimos (índice, group by sum,
 map+join, sort). O exercício paralelo no domínio dele nunca foi feito.
 Prazo estoura na sessão 3.
@@ -94,3 +110,32 @@ api.py tem um GET /ocorrencia solto, fora da fatia [repo]
 
 nenhum registrado. Autoavaliação e código divergem: ele se declara iniciante e
 produz agregação de quatro operações sem travar. Calibrar pelo código. [chat]
+
+## VOCABULÁRIO DADO
+
+constraint, integrity constraint violation, raise/levantar,
+signature, raises, section × entry, e.g. = exemplo e não lista,
+stdlib × site-packages × projeto, tabela ≠ planilha
+âncora (o que vem depois do #), seção × entrada, atributo de exceção, irmão × ancestral na árvore
+edge case, bug × edge case, fronteira
+sqlite_master, DEFAULT × NULL explícito, ISO 8601 ordena
+lexicograficamente, migração (pendente), .gitignore
+
+## REGRA DE CONDUÇÃO (14SET)
+
+nenhuma palavra em pergunta que não tenha sido apontada
+na exposição. Marcus pode parar com "não apresentou".
+não cobrar caso de borda antes da unidade de bordas.
+não trocar o enunciado no meio do exercício.
+
+## PROJETO ATIVO — agenda-barbearia
+
+fatia 1: uma entidade, 4 camadas, deploy no Render
+método PRIMM (Sentance & Waite): Predict, Run,
+Investigate, Modify, Make
+escopo: ~150 linhas, 5 arquivos
+regras: (1) não agendar no passado -> service
+(2) horário único -> UNIQUE no banco [FEITO]
+FEITO: schema.sql, criar_banco.py, .gitignore, commit 1
+PRÓXIMO: storage.py e service.py — capturar IntegrityError
+e devolver (False, mensagem)

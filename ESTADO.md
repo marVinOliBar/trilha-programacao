@@ -5,25 +5,17 @@
 
 ## CICLO ATUAL
 
-sessoes: 6
-ultima_sessao: 2026-09-14 (4 sessões no dia)
+sessoes: 7
+ultima_sessao: 2026-09-15
 
 ## REPOSITÓRIOS
 
 trilha-programacao — 80 commits, 16MAR26 a 30AGO26 [repo]
 escala-sgb — 4 commits, 14AGO26 a 22AGO26 [repo]
-
-## MODO CORRENTE
-
-DRILL: exercícios 1 a 27 em nivel-1-fundamentos/exercicios_algoritmo [repo]
-CONSTRUÇÃO: fatia "registrar atendimento" em sistema-bombeiros-db — aberta [chat 03SET]
-feito: buscar_id_ocorrencia_storage (traduz sdo+data no id da FK) [repo 30AGO]
-parado em: o service do atendimento, não escrito [repo]
-último conceito exposto: chave natural × chave substituta [chat 03SET]
+agenda-barbearia — projeto ativo
 
 ## FUNDAMENTOS
 
-F0 (a) anatomia do traceback — CONSOLIDADO. Revisar sessão 4
 F0 (b) documentação oficial — em treino
 firme: página pelo tipo do erro, entrada, âncora
 instável: seção × entrada (2 sessões seguidas);
@@ -40,7 +32,16 @@ raise: exposto uma vez, nunca precisou DECIDIR quando usar. Não consolidado.
 A decisão é a matéria, não a sintaxe
 F2 caso de borda — PENDENTE. É o pré-requisito oculto que travou o antigo campo
 EXCEÇÕES da modelagem por meses [chat 12SET]
-F3 teste — PENDENTE [repo]
+F3 teste — nível 0 EXPOSTO [sessão 7, 15SET]
+teste = programa que roda teu programa e compara
+três partes: preparar, executar, verificar
+assert mostra saiu × esperado × origem
+convenção: arquivo test*\*.py, função test*\*
+REGRA: sempre conferir "collected N items"
+nome errado = 0 coletados, sem aviso, suíte verde
+reproduzido na tela: é o defeito do escala-sgb
+PENDENTE: teste que toca banco (isolamento, tmp_path)
+— assunto próprio, não embutir em aula de teste
 F4 camadas e contrato — PENDENTE como unidade; cobrado como lei desde 16MAR [repo]
 F5 padrão profissional — PENDENTE. 0 de 115 funções com type hint em
 trilha-programacao; prontidao.py em escala-sgb tem, e é a exceção [repo]
@@ -51,7 +52,6 @@ F6 git — PENDENTE como unidade; usa branch, merge, resolve conflito e
 
 F0(c) doc × fórum × chute — abertura de sessão, 15 min
 bordas nível 1 (camadas) — abertura de sessão
-join lógico — reaparece na fatia 2, em SQL e em Python
 
 ## BORDAS
 
@@ -75,11 +75,12 @@ regra do join: percorre o lado muitos, indexa o lado um
 filter · dict-acumulador · chave composta · dois acumuladores paralelos ·
 group by (count, sum, max, set) · map · sort multi-critério com chave negativa ·
 list e dict comprehension
-última aparição: ex27, 29AGO26. Vencem na sessão 6 se não reaparecerem.
-em treino — join lógico, degrau 1, 2 sessões. Estoura na sessão 3.
+consolidados — VENCIDOS, não reapareceram na sessão 7.
+reaparecem no service.py (comprehension e filter)
+
 exemplar narrado dado no domínio livros/empréstimos (índice, group by sum,
 map+join, sort). O exercício paralelo no domínio dele nunca foi feito.
-Prazo estoura na sessão 3.
+
 nota do aluno (12SET): treina pouco e esquece rápido — é o que motivou a regra
 de validade do consolidado.
 
@@ -130,12 +131,16 @@ não trocar o enunciado no meio do exercício.
 
 ## PROJETO ATIVO — agenda-barbearia
 
-fatia 1: uma entidade, 4 camadas, deploy no Render
-método PRIMM (Sentance & Waite): Predict, Run,
-Investigate, Modify, Make
-escopo: ~150 linhas, 5 arquivos
-regras: (1) não agendar no passado -> service
-(2) horário único -> UNIQUE no banco [FEITO]
-FEITO: schema.sql, criar_banco.py, .gitignore, commit 1
-PRÓXIMO: storage.py e service.py — capturar IntegrityError
-e devolver (False, mensagem)
+repo: https://github.com/marVinOliBar/agenda-barbearia
+FEITO: schema.sql, criar_banco.py, .gitignore,
+storage.py, test_regras.py
+decisão: IntegrityError sobe do storage; service traduz
+storage = declarar fora de escopo; service = tratar
+PRÓXIMO: service.py — as duas regras + capturar
+IntegrityError e devolver (False, mensagem)
+
+## ERRO MEU (15SET)
+
+empilhei 7 conceitos em 2 mensagens em F3.
+"segue a forma por enquanto" é proibido: se precisa
+disso, o conceito não está pronto para entrar.

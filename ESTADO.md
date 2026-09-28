@@ -46,11 +46,9 @@ Regras de negócio:
 (1) não agendar em horário passado -> service. FEITO [17SET]
 (2) horário único -> UNIQUE(inicio) no banco. FEITO
 
-FEITO: schema.sql, criar_banco.py, .gitignore, storage.py,
-service.py (criar, listar, formatar, inicio_antes_de_agora),
-test_regras.py (9 testes verdes), api.py (GET /agendamentos) [26SET]
-PRÓXIMO: POST /agendamentos — receber dados do navegador e responder
-com código de erro quando o service devolve (False, mensagem)
+FEITO: api.py com POST /agendamentos (ficha NovoAgendamento, Pydantic)
+PRÓXIMO: códigos de erro — recusa do service tem que voltar com código
+de erro, não 200
 DEPOIS: index.html, deploy
 
 Decisões registradas:
@@ -81,6 +79,9 @@ horário duplicado: "08:00", "8:00" e "2026-10-1" passam como horários
 diferentes no UNIQUE. Provado em 26SET: 3 clientes no mesmo horário.
 Conserto: normalizar com strptime -> strftime
 cupom.py está no repositório — é arquivo de investigação, sai do repo
+POST recusado volta com 200 ("deu certo") e mensagem de recusa
+telefone aceita qualquer texto ("string" gravou). O Pydantic confere
+o TIPO, não o SENTIDO
 
 PENDENTE:
 teste do caminho feliz do service — precisa de banco isolado nos testes
@@ -199,13 +200,10 @@ verdes são a prova [sessão 12]
 PENDENTE: teste que toca banco (isolamento). Contornado na sessão 9
 extraindo função pura — contorno melhor que o original
 
-F4 camadas e contrato — em treino, na prática
-separar lógica de entrada/saída: a parte com regra fica onde dá
-para verificar. É o que logic.py deveria ter sido
-função pura recebe, não busca [sessão 9]
-injeção de dependência, forma mínima: a função recebe o que antes
-buscava (relógio, como o banco na sessão 9) [sessão 12]
-API não tem regra: recebe o pedido e passa para o service [sessão 13]
+F4 — corpo do pedido (request body): os dados vão dentro do envelope;
+a ficha (class ... BaseModel) diz o que esperar; o Pydantic é o guarda
+que confere o tipo e barra com 422 antes de chegar no service [sessão 14]
+/docs e /redoc são criados pelo FastAPI (tutorial First Steps)
 
 F5 padrão profissional — PENDENTE como unidade. 0 de 115 funções com type
 hint em trilha-programacao; prontidao.py em escala-sgb tem, e é a
@@ -311,6 +309,7 @@ fronteira, N+1 query problem, PRIMM, overlap/sobreposição de intervalos,
 injeção de dependência, refatoração, parâmetro × argumento, valor padrão,
 type hint, Long Parameter List, strftime, rota, GET/POST,
 endereço = substantivo no plural, servidor/uvicorn
+request body, BaseModel, Pydantic, 422, /docs, /redoc
 
 ## REGRA DE CONDUÇÃO
 

@@ -1,13 +1,8 @@
-from datetime import datetime
-
 def verifica_concomitancia(reserva_a, reserva_b):
     inicio_a, termino_a = reserva_a
     inicio_b, termino_b = reserva_b
     return inicio_a < termino_b and inicio_b < termino_a
     
-
-
-
 pares = [
     (("09:00", "09:30"), ("09:15", "09:45")),
     (("09:00", "09:30"), ("09:30", "10:00")),

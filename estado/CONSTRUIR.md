@@ -20,9 +20,8 @@ Se algum chat abrir projeto próprio, virou a quarta frente parada.
 
 ## CICLO
 
-construir: sessão 17, 2026-10-14
-(sessões 1 a 12 entre 12SET e 21SET; 13 em 26SET, 14 em 28SET,
-15 em 02OUT, 16 em 03OUT, 17 em 14OUT)
+construir: sessão 19, 2026-11-03
+(18 em 15OUT, 19 em 03NOV)
 
 ## REPOSITÓRIOS
 
@@ -60,8 +59,14 @@ test_regras.py — 9 testes verdes
 
 ## PRÓXIMO
 
-mostrar o erro dentro da página, em vez do {"detail": ...} cru
-depois: deploy no Render
+deploy no Render — primeiro endereço público do sistema
+
+FEITO [15OUT, commit 19OUT]: recusa do service aparece na página, com 400
+FEITO [03NOV]: releitura do sistema em 5 paradas, com o código aberto.
+  Caminho do clique explicado inteiro, em partes
+FEITO [03NOV]: achado lendo e consertado — chave "agendamentoes" no
+  context da página de erro. Sintoma: erro aparecia, lista sumia
+  ("Nenhum agendamento."). O for-else escondeu o defeito
 
 ## DECISÕES
 
@@ -97,7 +102,6 @@ horário duplicado: "08:00", "8:00", "2026-10-1" e espaço sobrando no
 fim passam como horários diferentes no UNIQUE. Provado em 26SET (3
 clientes no mesmo horário) e visível na tela em 14OUT (2026-09-29 08:00
 aparece duas vezes). Conserto: normalizar com strptime -> strftime
-erro na tela aparece como JSON cru {"detail": ...}
 horário ocupado devolve 400; o preciso é 409. Exige que o service diga
 QUAL recusa foi
 /docs mostra o 400 como "Undocumented" (a rota só declara 200 e 422)
@@ -108,6 +112,8 @@ Exemplo de borda entre camadas
 banco tem dado velho de antes das regras (sem nome, data passada,
 "string"). Fictício: pode apagar agenda.db e rodar criar_banco.py
 cupom.py está no repositório — é arquivo de investigação, sai do repo
+depois de um erro, os campos do formulário voltam vazios
+nenhum teste olha a página: a chave errada passou por isso
 
 ## PENDENTE
 

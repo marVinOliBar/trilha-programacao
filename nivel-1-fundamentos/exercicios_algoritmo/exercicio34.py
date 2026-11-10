@@ -31,11 +31,10 @@ def conflitam(agenda_1, agenda_2):
     return inicio_a < fim_b and inicio_b < fim_a
 
 def sala_tem_conflito(agendas):
-    ordenadas = sorted(agendas, key=lambda agenda: agenda[1], reverse=True)
+    ordenadas = sorted(agendas, key=lambda agenda: agenda[1])
     for i in range(len(ordenadas) - 1):
         atual = ordenadas[i]
         seguinte = ordenadas[i + 1]
-        print(atual, seguinte)
         if conflitam(atual, seguinte):
             return True
     return False
